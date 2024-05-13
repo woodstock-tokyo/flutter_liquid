@@ -1,5 +1,6 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
+import 'flutter_liquid.dart';
 import 'flutter_liquid_method_channel.dart';
 
 abstract class FlutterLiquidPlatform extends PlatformInterface {
@@ -23,7 +24,29 @@ abstract class FlutterLiquidPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<String> getVersion() {
+    throw UnimplementedError('getVersion() has not been implemented.');
+  }
+
+  Future<void> activate() {
+    throw UnimplementedError('activate() has not been implemented.');
+  }
+
+  Future<String?> startVerify({
+    required String endpoint,
+    required String apiKey,
+    String? token,
+    String? applicant,
+  }) {
+    throw UnimplementedError('startVerify() has not been implemented.');
+  }
+
+  Future<IdentifyIdChipResult> identifyIdChip({
+    required int documentTypeJpki,
+    required int verificationMethodJpki,
+    String? base64TargetData,
+    bool? enabledChipForgotPin,
+  }) {
+    throw UnimplementedError('identifyIdChip() has not been implemented.');
   }
 }
