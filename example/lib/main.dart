@@ -28,17 +28,18 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String platformVersion;
     String connectionId;
     try {
-      platformVersion = await _flutterLiquidPlugin.getVersion();
       connectionId = await _flutterLiquidPlugin.startVerify(
+            token:
+                "49fc58d0139cf954fb30878d4b107277078658299b8000fc0eaa7b8c421b7f90",
+            applicant: "3",
             endpoint: const String.fromEnvironment('ENDPOINT'),
             apiKey: const String.fromEnvironment('API_KEY'),
           ) ??
           'Unknown';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+    } on PlatformException catch (e) {
+      print('LIQUID: $e');
       connectionId = 'Failed to start verify.';
     }
 
@@ -48,7 +49,6 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _platformVersion = platformVersion;
       _connectionId = connectionId;
     });
   }

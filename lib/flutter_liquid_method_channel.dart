@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -42,7 +44,7 @@ class MethodChannelFlutterLiquid extends FlutterLiquidPlatform {
     String? base64TargetData,
     bool? enabledChipForgotPin,
   }) async {
-    final result = await methodChannel.invokeMapMethod<String, dynamic>(
+    final result = await methodChannel.invokeMethod<String>(
       'identifyIdChip',
       <String, dynamic>{
         'documentTypeJpki': documentTypeJpki,
@@ -53,7 +55,7 @@ class MethodChannelFlutterLiquid extends FlutterLiquidPlatform {
     );
     if (result == null) throw FlutterError('identifyIdChip() returned null');
 
-    return IdentifyIdChipResult.fromJson(result);
+    return IdentifyIdChipResult.fromJson(const JsonDecoder().convert(result));
   }
 
   @override
