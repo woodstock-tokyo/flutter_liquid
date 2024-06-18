@@ -31,9 +31,8 @@ class _MyAppState extends State<MyApp> {
     String version;
     try {
       await _flutterLiquidPlugin.startVerify(
-        token:
-            "ff50af38f7cae96f96c22fe1a1dda41d27aa2adb0c671837c5213cb5c7ef15fe",
-        applicant: "3",
+        token: const String.fromEnvironment('TOKEN'),
+        applicant: const String.fromEnvironment('APPLICANT'),
         endpoint: const String.fromEnvironment('ENDPOINT'),
         apiKey: const String.fromEnvironment('API_KEY'),
       );
