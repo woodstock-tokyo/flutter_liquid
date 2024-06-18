@@ -38,23 +38,78 @@ class FlutterLiquid {
   }
 }
 
+class AdditionalData {
+  final String? maintenanceTitle;
+  final String? maintenanceMessage;
+
+  AdditionalData({
+    required this.maintenanceTitle,
+    required this.maintenanceMessage,
+  });
+
+  static AdditionalData fromMap(Map<String, dynamic> map) {
+    return AdditionalData(
+      maintenanceTitle: map['maintenanceTitle'],
+      maintenanceMessage: map['maintenanceMessage'],
+    );
+  }
+}
+
+class ProcResult {
+  final String status;
+  final String resultCode;
+  final AdditionalData? additionalData;
+
+  ProcResult({
+    required this.status,
+    required this.resultCode,
+    this.additionalData,
+  });
+
+  static ProcResult fromMap(Map<String, dynamic> map) {
+    return ProcResult(
+      status: map['status'],
+      resultCode: map['resultCode'],
+      additionalData: map['additionalData'] != null
+          ? AdditionalData.fromMap(
+              (map['additionalData'] as Map<dynamic, dynamic>)
+                  .cast<String, dynamic>(),
+            )
+          : null,
+    );
+  }
+}
+
 class IdentifyIdChipResult {
   IdentifyIdChipResult({
+    required this.result,
     required this.jpkiResult,
     required this.jpkiEvidence,
     this.chipData,
   });
 
+  final ProcResult result;
   final JpkiResult jpkiResult;
   final JpkiEvidence jpkiEvidence;
   final ChipData? chipData;
 
-  static IdentifyIdChipResult fromJson(Map<String, dynamic> json) {
+  static IdentifyIdChipResult fromMap(Map<String, dynamic> map) {
     return IdentifyIdChipResult(
-      jpkiResult: JpkiResult.fromJson(json['jpkiResult']),
-      jpkiEvidence: JpkiEvidence.fromJson(json['jpkiEvidence']),
-      chipData:
-          json['chipData'] != null ? ChipData.fromJson(json['chipData']) : null,
+      result: ProcResult.fromMap(
+        (map['result'] as Map<dynamic, dynamic>).cast<String, dynamic>(),
+      ),
+      jpkiResult: JpkiResult.fromMap(
+        (map['jpkiResult'] as Map<dynamic, dynamic>).cast<String, dynamic>(),
+      ),
+      jpkiEvidence: JpkiEvidence.fromMap(
+        (map['jpkiEvidence'] as Map<dynamic, dynamic>).cast<String, dynamic>(),
+      ),
+      chipData: map['chipData'] != null
+          ? ChipData.fromMap(
+              (map['chipData'] as Map<dynamic, dynamic>)
+                  .cast<String, dynamic>(),
+            )
+          : null,
     );
   }
 }
@@ -66,9 +121,9 @@ class JpkiResult {
 
   final bool isSuccess;
 
-  static JpkiResult fromJson(Map<String, dynamic> json) {
+  static JpkiResult fromMap(Map<String, dynamic> map) {
     return JpkiResult(
-      isSuccess: json['isSuccess'],
+      isSuccess: map['isSuccess'],
     );
   }
 }
@@ -90,14 +145,14 @@ class JpkiEvidence {
   final String? issuerDn;
   final String? signatureId;
 
-  static JpkiEvidence fromJson(Map<String, dynamic> json) {
+  static JpkiEvidence fromMap(Map<String, dynamic> map) {
     return JpkiEvidence(
-      uid: json['uid'],
-      asof: json['asof'],
-      notBefore: json['notBefore'],
-      notAfter: json['notAfter'],
-      issuerDn: json['issuerDn'],
-      signatureId: json['signatureId'],
+      uid: map.containsKey('uid') ? map['uid'] : null,
+      asof: map.containsKey('asof') ? map['asof'] : null,
+      notBefore: map.containsKey('notBefore') ? map['notBefore'] : null,
+      notAfter: map.containsKey('notAfter') ? map['notAfter'] : null,
+      issuerDn: map.containsKey('issuerDn') ? map['issuerDn'] : null,
+      signatureId: map.containsKey('signatureId') ? map['signatureId'] : null,
     );
   }
 }
@@ -117,20 +172,12 @@ class ChipData {
     this.myNumber,
     this.zipCode,
     this.sex,
-    required this.sexValue,
-    required this.sexValueIsValid,
     this.japaneseForeignerJudgment,
     this.residenceCardComprehensivePermission,
     this.residenceCardIndividualPermission,
     this.residenceCardUpdateStatus,
-    required this.residenceCardUpdateStatusValue,
-    required this.residenceCardUpdateStatusValueIsValid,
     this.residenceCardInfoType,
-    required this.residenceCardInfoTypeValue,
-    required this.residenceCardInfoTypeValueIsValid,
     this.residenceCardType,
-    required this.residenceCardTypeValue,
-    required this.residenceCardTypeValueIsValid,
     this.idFacePhoto,
     this.nameExternalCharacters = const [],
     this.previousNameExternalCharacters = const [],
@@ -151,21 +198,13 @@ class ChipData {
   final String? expireDate;
   final String? myNumber;
   final String? zipCode;
-  final int? sex;
-  final int sexValue;
-  final bool sexValueIsValid;
-  final int? japaneseForeignerJudgment;
+  final String? sex;
+  final String? japaneseForeignerJudgment;
   final String? residenceCardComprehensivePermission;
   final String? residenceCardIndividualPermission;
   final bool? residenceCardUpdateStatus;
-  final bool residenceCardUpdateStatusValue;
-  final bool residenceCardUpdateStatusValueIsValid;
-  final int? residenceCardInfoType;
-  final int residenceCardInfoTypeValue;
-  final bool residenceCardInfoTypeValueIsValid;
-  final int? residenceCardType;
-  final int residenceCardTypeValue;
-  final bool residenceCardTypeValueIsValid;
+  final String? residenceCardInfoType;
+  final String? residenceCardType;
   final String? idFacePhoto;
   final List<String> nameExternalCharacters;
   final List<String> previousNameExternalCharacters;
@@ -173,47 +212,81 @@ class ChipData {
   final bool isExistLatestName;
   final bool isExistLatestAddress;
 
-  static ChipData fromJson(Map<String, dynamic> json) {
+  static ChipData fromMap(Map<String, dynamic> map) {
     return ChipData(
-      name: json['name'],
-      nameKana: json['nameKana'],
-      lastNameKanaCandidates: List<String>.from(json['lastNameKanaCandidates']),
-      firstNameKanaCandidates:
-          List<String>.from(json['firstNameKanaCandidates']),
-      previousName: json['previousName'],
+      name: map.containsKey('name') ? map['name'] : null,
+      nameKana: map.containsKey('nameKana') ? map['nameKana'] : null,
+      lastNameKanaCandidates: map.containsKey('lastNameKanaCandidates') &&
+              map['lastNameKanaCandidates'] != null
+          ? List<String>.from(map['lastNameKanaCandidates'])
+          : null,
+      firstNameKanaCandidates: map.containsKey('firstNameKanaCandidates') &&
+              map['firstNameKanaCandidates'] != null
+          ? List<String>.from(map['firstNameKanaCandidates'])
+          : null,
+      previousName:
+          map.containsKey('previousName') ? map['previousName'] : null,
       previousLastNameKanaCandidates:
-          List<String>.from(json['previousLastNameKanaCandidates']),
-      birthday: json['birthday'],
-      address: json['address'],
-      idNumber: json['idNumber'],
-      expireDate: json['expireDate'],
-      myNumber: json['myNumber'],
-      zipCode: json['zipCode'],
-      sex: json['sex'],
-      sexValue: json['sexValue'],
-      sexValueIsValid: json['sexValueIsValid'],
-      japaneseForeignerJudgment: json['japaneseForeignerJudgment'],
+          map.containsKey('previousLastNameKanaCandidates') &&
+                  map['previousLastNameKanaCandidates'] != null
+              ? List<String>.from(map['previousLastNameKanaCandidates'])
+              : null,
+      birthday: map.containsKey('birthday') ? map['birthday'] : null,
+      address: map.containsKey('address') ? map['address'] : null,
+      idNumber: map.containsKey('idNumber') ? map['idNumber'] : null,
+      expireDate: map.containsKey('expireDate') ? map['expireDate'] : null,
+      myNumber: map.containsKey('myNumber') ? map['myNumber'] : null,
+      zipCode: map.containsKey('zipCode') ? map['zipCode'] : null,
+      sex: map.containsKey('sex') ? map['sex'] : null,
+      japaneseForeignerJudgment: map.containsKey('japaneseForeignerJudgment')
+          ? map['japaneseForeignerJudgment']
+          : null,
       residenceCardComprehensivePermission:
-          json['residenceCardComprehensivePermission'],
+          map.containsKey('residenceCardComprehensivePermission')
+              ? map['residenceCardComprehensivePermission']
+              : null,
       residenceCardIndividualPermission:
-          json['residenceCardIndividualPermission'],
-      residenceCardUpdateStatus: json['residenceCardUpdateStatus'],
-      residenceCardUpdateStatusValue: json['residenceCardUpdateStatusValue'],
-      residenceCardUpdateStatusValueIsValid:
-          json['residenceCardUpdateStatusValueIsValid'],
-      residenceCardInfoType: json['residenceCardInfoType'],
-      residenceCardInfoTypeValue: json['residenceCardInfoTypeValue'],
-      residenceCardInfoTypeValueIsValid:
-          json['residenceCardInfoTypeValueIsValid'],
-      residenceCardType: json['residenceCardType'],
-      residenceCardTypeValue: json['residenceCardTypeValue'],
-      residenceCardTypeValueIsValid: json['residenceCardTypeValueIsValid'],
-      idFacePhoto: json['idFacePhoto'],
-      nameExternalCharacters: List<String>.from(json['nameExternalCharacters']),
-      previousNameExternalCharacters: json['previousNameExternalCharacters'],
-      addressExternalCharacters: json['addressExternalCharacters'],
-      isExistLatestName: json['isExistLatestName'],
-      isExistLatestAddress: json['isExistLatestAddress'],
+          map.containsKey('residenceCardIndividualPermission')
+              ? map['residenceCardIndividualPermission']
+              : null,
+      residenceCardUpdateStatus: map.containsKey('residenceCardUpdateStatus')
+          ? map['residenceCardUpdateStatus']
+          : null,
+      residenceCardInfoType: map.containsKey('residenceCardInfoType')
+          ? map['residenceCardInfoType']
+          : null,
+      residenceCardType: map.containsKey('residenceCardType')
+          ? map['residenceCardType']
+          : null,
+      idFacePhoto: map.containsKey('idFacePhoto') ? map['idFacePhoto'] : null,
+      nameExternalCharacters: map.containsKey('nameExternalCharacters') &&
+              map['nameExternalCharacters'] != null
+          ? List<String>.from(map['nameExternalCharacters'])
+          : [],
+      previousNameExternalCharacters:
+          map.containsKey('previousNameExternalCharacters') &&
+                  map['previousNameExternalCharacters'] != null
+              ? List<String>.from(map['previousNameExternalCharacters'])
+              : [],
+      addressExternalCharacters: map.containsKey('addressExternalCharacters') &&
+              map['addressExternalCharacters'] != null
+          ? List<String>.from(map['addressExternalCharacters'])
+          : [],
+      isExistLatestName: map.containsKey('isExistLatestName')
+          ? map['isExistLatestName']
+          : false,
+      isExistLatestAddress: map.containsKey('isExistLatestAddress')
+          ? map['isExistLatestAddress']
+          : false,
     );
+  }
+}
+
+extension MapExtension on Map<String, dynamic> {
+  T? getOrNull<T>(String key) {
+    if (containsKey(key)) {
+      return this[key] as T?;
+    }
+    return null;
   }
 }

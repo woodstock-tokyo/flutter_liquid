@@ -17,7 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
-  String _connectionId = 'Unknown';
+  String _result = 'Unknown';
   final _flutterLiquidPlugin = FlutterLiquid();
 
   @override
@@ -28,19 +28,19 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String connectionId;
+    String version;
     try {
-      connectionId = await _flutterLiquidPlugin.startVerify(
-            token:
-                "49fc58d0139cf954fb30878d4b107277078658299b8000fc0eaa7b8c421b7f90",
-            applicant: "3",
-            endpoint: const String.fromEnvironment('ENDPOINT'),
-            apiKey: const String.fromEnvironment('API_KEY'),
-          ) ??
-          'Unknown';
+      await _flutterLiquidPlugin.startVerify(
+        token:
+            "ff50af38f7cae96f96c22fe1a1dda41d27aa2adb0c671837c5213cb5c7ef15fe",
+        applicant: "3",
+        endpoint: const String.fromEnvironment('ENDPOINT'),
+        apiKey: const String.fromEnvironment('API_KEY'),
+      );
+      version = await _flutterLiquidPlugin.getVersion();
     } on PlatformException catch (e) {
-      print('LIQUID: $e');
-      connectionId = 'Failed to start verify.';
+      version = 'Failed to get platform version.';
+      debugPrint('LIQUID: $e');
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _connectionId = connectionId;
+      _platformVersion = version;
     });
   }
 
@@ -68,16 +68,24 @@ class _MyAppState extends State<MyApp> {
               Text('Version: $_platformVersion', textAlign: TextAlign.center),
               const SizedBox(height: 8),
               Text(
-                'Connection id: $_connectionId',
+                'Result: $_result',
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () async {
-                  await _flutterLiquidPlugin.identifyIdChip(
-                    documentTypeJpki: 1,
-                    verificationMethodJpki: 1,
-                  );
+                  try {
+                    final result = await _flutterLiquidPlugin.identifyIdChip(
+                      documentTypeJpki: 1,
+                      verificationMethodJpki: 1,
+                    );
+                    setState(() {
+                      _result = result.toString();
+                    });
+                  } catch (e, stacktrace) {
+                    debugPrint('LIQUID: $e');
+                    debugPrint('LIQUID: $stacktrace');
+                  }
                 },
                 child: const Text('Start eKYC'),
               ),

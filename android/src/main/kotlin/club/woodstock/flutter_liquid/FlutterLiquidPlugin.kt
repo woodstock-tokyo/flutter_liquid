@@ -72,7 +72,7 @@ class FlutterLiquidPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
                 when (res.resultStatus) {
                     ChipIdentificationResultStatus.SUCCESS -> {
                         // TODO
-                        identifyIdChipResult?.success(null)
+                        identifyIdChipResult?.success(res.toMap())
                     }
 
                     else -> {
@@ -141,7 +141,7 @@ class FlutterLiquidPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
     private fun handleActivate(result: Result) {
         LiquidSdk.getInstance(activity).activate { res ->
             when (res.result) {
-                LiquidProcessingResultStatus.SUCCESS -> result.success(null)
+                LiquidProcessingResultStatus.SUCCESS -> result.success(res.toMap())
                 else -> result.error(
                     res.result.name,
                     res.errorCode,

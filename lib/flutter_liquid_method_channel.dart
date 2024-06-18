@@ -44,7 +44,7 @@ class MethodChannelFlutterLiquid extends FlutterLiquidPlatform {
     String? base64TargetData,
     bool? enabledChipForgotPin,
   }) async {
-    final result = await methodChannel.invokeMethod<String>(
+    final result = await methodChannel.invokeMapMethod<String, dynamic>(
       'identifyIdChip',
       <String, dynamic>{
         'documentTypeJpki': documentTypeJpki,
@@ -55,7 +55,7 @@ class MethodChannelFlutterLiquid extends FlutterLiquidPlatform {
     );
     if (result == null) throw FlutterError('identifyIdChip() returned null');
 
-    return IdentifyIdChipResult.fromJson(const JsonDecoder().convert(result));
+    return IdentifyIdChipResult.fromMap(result);
   }
 
   @override
