@@ -64,12 +64,7 @@ public class FlutterLiquidPlugin: NSObject, FlutterPlugin {
       endpoint: URL(fileURLWithPath: endpoint),
       apiKey: apiKey,
       completion: { param in
-        do {
-          let jsonData = try JSONEncoder().encode(LiquidProcResult(from: param))
-          result(jsonData)
-        } catch let error {
-          result(error)
-        }
+        result(param.toDictionary())
       }
     )
   }
@@ -90,23 +85,13 @@ public class FlutterLiquidPlugin: NSObject, FlutterPlugin {
       .setDocumentTypeJpki(.mynumberCardWithMyNumber)
       .build()
     LiquidEkyc.identifyIdChip(parameters, on: rootViewController, completion: { chipResult in
-      do {
-        let jsonData = try JSONEncoder().encode(LiquidIdentifyIdChipResult(from: chipResult))
-        result(jsonData)
-      } catch let error {
-        result(error)
-      }
+      result(chipResult.toDictionary())
     })
   }
   
   func activate(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     LiquidEkyc.activate(completion: { param in
-      do {
-        let jsonData = try JSONEncoder().encode(LiquidProcResult(from: param))
-        result(jsonData)
-      } catch let error {
-        result(error)
-      }
+      result(param.toDictionary())
     })
   }
 }
