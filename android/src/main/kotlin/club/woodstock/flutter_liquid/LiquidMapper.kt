@@ -18,7 +18,7 @@ fun JpkiEvidence.toMap(): Map<String, Any?> {
         "asof" to asOf,
         "notBefore" to notBefore,
         "notAfter" to notAfter,
-        "issuerOn" to issuerDn,
+        "issuerDn" to issuerDn,
         "signatureId" to signatureId,
     )
 }
