@@ -109,6 +109,7 @@ class FlutterLiquidPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
 
         if (applicantId != null && token != null) {
             LiquidSdk.getInstance(activity).startVerify(endpoint, apiKey, applicantId, token)
+            result.success(null)
             return
         }
 
