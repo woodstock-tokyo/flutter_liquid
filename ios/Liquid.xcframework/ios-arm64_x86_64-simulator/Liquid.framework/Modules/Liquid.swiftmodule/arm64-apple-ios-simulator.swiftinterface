@@ -34,13 +34,26 @@ import WebKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+@objc public enum BirthYearCalendarType : Swift.Int {
+  case japaneseCalendar = 1
+  case gregorianCalendar
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class ChipData : ObjectiveC.NSObject {
   @objc public var name: Swift.String?
   @objc public var nameKana: Swift.String?
+  @objc public var nameHalfWidthKana: Swift.String?
   @objc public var lastNameKanaCandidates: [Swift.String]?
+  @objc public var lastNameHalfWidthKanaCandidates: [Swift.String]?
   @objc public var firstNameKanaCandidates: [Swift.String]?
+  @objc public var firstNameHalfWidthKanaCandidates: [Swift.String]?
   @objc public var previousName: Swift.String?
   @objc public var previousLastNameKanaCandidates: [Swift.String]?
+  @objc public var previousLastNameHalfWidthKanaCandidates: [Swift.String]?
   @objc public var birthday: Swift.String?
   @objc public var address: Swift.String?
   @objc public var idNumber: Swift.String?
@@ -59,6 +72,8 @@ import _SwiftConcurrencyShims
     @objc set
   }
   @objc public var japaneseForeignerJudgment: Liquid.JapaneseForeignerJudgment?
+  @objc public var movedAbroad: Liquid.MovedAbroad?
+  @objc public var plannedAbroadMoveDate: Swift.String?
   @objc public var residenceCardComprehensivePermission: Swift.String?
   @objc public var residenceCardIndividualPermission: Swift.String?
   @nonobjc public var residenceCardUpdateStatus: Swift.Bool?
@@ -104,6 +119,11 @@ import _SwiftConcurrencyShims
   @objc public func existExternalCharInAddress() -> Swift.Bool
   @objc public var isExistLatestName: Swift.Bool
   @objc public var isExistLatestAddress: Swift.Bool
+  @objc public var chipErrorData: Liquid.ChipErrorData?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc public class ChipErrorData : ObjectiveC.NSObject {
+  @objc final public let attemptsRemainingUntilChipLocked: Swift.Int
   @objc deinit
 }
 @_hasMissingDesignatedInitializers @objc public class DesignSettings : ObjectiveC.NSObject {
@@ -135,6 +155,12 @@ import _SwiftConcurrencyShims
   @objc public init(size: Swift.Int, image: Foundation.Data)
   @objc deinit
 }
+@objc public class DriverLicensePassword : ObjectiveC.NSObject, Liquid.VerifyIdChipPassword {
+  @objc final public let pin1: Swift.String
+  @objc final public let pin2: Swift.String
+  @objc public init(pin1: Swift.String, pin2: Swift.String)
+  @objc deinit
+}
 @objc public class DriverLicenseRawData : Liquid.ICRawData {
   @objc final public let licenseEntriesRawData: Swift.String
   @objc final public let registeredDomicileRawData: Swift.String
@@ -160,6 +186,15 @@ import _SwiftConcurrencyShims
   @objc override dynamic public init()
   @objc deinit
 }
+@objc public enum IdChipAvailabilityStatus : Swift.Int {
+  case enabled
+  case unsupported
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
 @objc public enum IdDocumentType : Swift.Int {
   case driverLicence = 1
   case mynumberCard = 2
@@ -181,6 +216,7 @@ import _SwiftConcurrencyShims
   case studentIdCard = 18
   case studentNotebook = 19
   case employeeIdCard = 21
+  case mynumberCardWithMyNumber = 22
   public init?(rawValue: Swift.Int)
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
@@ -210,6 +246,18 @@ extension Liquid.IdDocumentType : Swift.CaseIterable {
 @_hasMissingDesignatedInitializers @objc public class IdDocumentVerification : ObjectiveC.NSObject {
   @objc final public let result: Swift.Bool
   @objc final public let score: Swift.Double
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc public class IdentifyIdChipNonInteractiveParameters : ObjectiveC.NSObject {
+  @objc final public let password: Swift.String
+  @objc final public let base64TargetData: Swift.String?
+  @objc deinit
+}
+@objc public class IdentifyIdChipNonInteractiveParametersBuilder : ObjectiveC.NSObject {
+  @objc public init(password: Swift.String)
+  @discardableResult
+  @objc public func setBase64TargetData(_ base64TargetData: Swift.String?) -> Liquid.IdentifyIdChipNonInteractiveParametersBuilder
+  @objc public func build() -> Liquid.IdentifyIdChipNonInteractiveParameters
   @objc deinit
 }
 @_hasMissingDesignatedInitializers @objc public class IdentifyIdChipParameters : ObjectiveC.NSObject {
@@ -250,6 +298,7 @@ extension Liquid.IdDocumentType : Swift.CaseIterable {
   @objc public var notAfter: Swift.String?
   @objc public var issuerDn: Swift.String?
   @objc public var signatureId: Swift.String?
+  @objc public var revokedReason: Swift.Int
   @objc deinit
 }
 @_hasMissingDesignatedInitializers @objc public class JapaneseForeignerJudgment : ObjectiveC.NSObject {
@@ -260,7 +309,18 @@ extension Liquid.IdDocumentType : Swift.CaseIterable {
   }
   @objc deinit
 }
+extension Liquid.LiquidEkyc {
+  @objc public static func checkIdChipAvailability() -> Liquid.IdChipAvailabilityStatus
+}
+extension Liquid.LiquidEkyc {
+  @objc(identifyIdChipNonInteractiveWithParameters:on:completion:) public static func identifyIdChipNonInteractive(_ parameters: Liquid.IdentifyIdChipNonInteractiveParameters, on viewController: UIKit.UIViewController, completion: @escaping (Liquid.IdentifyIdChipResult) -> Swift.Void)
+}
+extension Liquid.LiquidEkyc {
+  @objc public static func verifyIdChipNonInteractive(_ parameters: Liquid.VerifyIdChipNonInteractiveParameters, on viewController: UIKit.UIViewController, completion: @escaping (Liquid.VerifyIdChipResult) -> Swift.Void)
+}
 @_inheritsConvenienceInitializers @objc public class LiquidEkyc : ObjectiveC.NSObject {
+  @objc public static func startVerify(endpoint: Foundation.URL, applicant: Swift.String, token: Swift.String)
+  @available(*, deprecated)
   @objc public static func startVerify(endpoint: Foundation.URL, token: Swift.String, applicant: Swift.String, apiKey: Swift.String)
   @objc public static func startVerify(endpoint: Foundation.URL, apiKey: Swift.String, completion: @escaping (Liquid.ProcResult) -> Swift.Void) -> Swift.String
   @available(*, deprecated)
@@ -271,10 +331,12 @@ extension Liquid.IdDocumentType : Swift.CaseIterable {
   @available(*, deprecated)
   @objc public static func verifyIdDocument(_ document: Liquid.IdDocumentType, _ verificationMethod: Liquid.VerificationMethod, on viewController: UIKit.UIViewController, completion: @escaping (Liquid.VerifyIdDocumentResult) -> Swift.Void)
   @objc(verifyIdDocumentWithParameters:on:completion:) public static func verifyIdDocument(_ verifyIdDocumentParameters: Liquid.VerifyIdDocumentParameters, on viewController: UIKit.UIViewController, completion: @escaping (Liquid.VerifyIdDocumentResult) -> Swift.Void)
+  @objc(verifyIdChipWithParameters:on:completion:) public static func verifyIdChip(_ verifyIdChipParameters: Liquid.VerifyIdChipParameters, on viewController: UIKit.UIViewController, completion: @escaping (Liquid.VerifyIdChipResult) -> Swift.Void)
+  @available(*, deprecated)
+  @objc public static func verifyIdChip(_ document: Liquid.IdDocumentType, _ verificationMethod: Liquid.VerificationMethod, on viewController: UIKit.UIViewController, completion: @escaping (Liquid.VerifyIdChipResult) -> Swift.Void)
   @available(*, deprecated)
   @objc public static func verifyIdChip(_ document: Liquid.IdDocumentType, chipVerifyKey: Swift.String, on viewController: UIKit.UIViewController, completion: @escaping (Liquid.VerifyIdChipResult) -> Swift.Void)
-  @objc public static func verifyIdChip(_ document: Liquid.IdDocumentType, _ verificationMethod: Liquid.VerificationMethod, on viewController: UIKit.UIViewController, completion: @escaping (Liquid.VerifyIdChipResult) -> Swift.Void)
-  @objc public static func verifyIdChip(_ verificationMethod: Liquid.VerificationMethod, signature: Swift.String, verifyingParams: Swift.String, rawData: Liquid.ICRawData, on viewController: UIKit.UIViewController, completion: @escaping (Liquid.VerifyIdChipResult) -> Swift.Void)
+  @objc public static func verifyIdChip(_ verificationMethod: Liquid.VerificationMethod, showReviewScreen: Swift.Bool, signature: Swift.String, verifyingParams: Swift.String, rawData: Liquid.ICRawData, on viewController: UIKit.UIViewController, completion: @escaping (Liquid.VerifyIdChipResult) -> Swift.Void)
   @objc public static func verifyIdChipExcludeBack(_ verificationMethod: Liquid.VerificationMethod, signature: Swift.String, verifyingParams: Swift.String, rawData: Liquid.ICRawData, on viewController: UIKit.UIViewController, completion: @escaping (Liquid.VerifyIdChipResult) -> Swift.Void)
   @available(*, deprecated)
   @objc public static func identifyIdChip(_ base64TargetData: Swift.String? = nil, on viewController: UIKit.UIViewController, completion: @escaping (Liquid.IdentifyIdChipResult) -> Swift.Void)
@@ -287,6 +349,21 @@ extension Liquid.IdDocumentType : Swift.CaseIterable {
   @objc public static func customizeDesign(_ designSettings: Liquid.DesignSettings)
   @objc public static func getVersion() -> Swift.String
   @objc override dynamic public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc public class MovedAbroad : ObjectiveC.NSObject {
+  @objc public static var unknown: Liquid.MovedAbroad
+  @objc public static var no: Liquid.MovedAbroad
+  @objc public static var yes: Liquid.MovedAbroad
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc public class MyNumberCardPassword : ObjectiveC.NSObject, Liquid.VerifyIdChipPassword {
+  @objc final public let password: Swift.String
+  @objc final public let birthYearCalendarType: Liquid.BirthYearCalendarType
+  @objc public init(password: Swift.String, birthYearCalendarType: Liquid.BirthYearCalendarType)
   @objc deinit
 }
 @objc public class MyNumberCardRawData : Liquid.ICRawData {
@@ -365,6 +442,8 @@ extension Liquid.IdDocumentType : Swift.CaseIterable {
   case chipIdentifyError
   case termsDoNotAgree
   case communicationFailure
+  case chipPinInvalid
+  case chipReadError
   public init?(rawValue: Swift.Int)
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
@@ -461,6 +540,7 @@ extension Liquid.IdDocumentType : Swift.CaseIterable {
 @_hasMissingDesignatedInitializers @objc public class VerifyFaceParameters : ObjectiveC.NSObject {
   @objc final public let showReviewScreen: Swift.Bool
   @objc final public let faceVerificationType: Liquid.FaceVerificationType
+  @objc final public let controlCharacter: Swift.String
   @objc deinit
 }
 @_inheritsConvenienceInitializers @objc public class VerifyFaceParametersBuilder : ObjectiveC.NSObject {
@@ -468,6 +548,8 @@ extension Liquid.IdDocumentType : Swift.CaseIterable {
   @objc public func setShowReviewScreen(_ showReviewScreen: Swift.Bool) -> Liquid.VerifyFaceParametersBuilder
   @discardableResult
   @objc public func setFaceVerificationType(_ verifyType: Liquid.FaceVerificationType) -> Liquid.VerifyFaceParametersBuilder
+  @discardableResult
+  @objc public func setControlCharacter(_ controlCharacter: Swift.String) -> Liquid.VerifyFaceParametersBuilder
   @objc public func build() -> Liquid.VerifyFaceParameters
   @objc override dynamic public init()
   @objc deinit
@@ -537,6 +619,30 @@ extension Liquid.IdDocumentType : Swift.CaseIterable {
   @objc final public let pattern7: UIKit.UIImage
   @objc deinit
 }
+@_hasMissingDesignatedInitializers @objc public class VerifyIdChipNonInteractiveParameters : ObjectiveC.NSObject {
+  @objc final public let password: any Liquid.VerifyIdChipPassword
+  @objc deinit
+}
+@objc public class VerifyIdChipNonInteractiveParametersBuilder : ObjectiveC.NSObject {
+  @objc public init(password: any Liquid.VerifyIdChipPassword)
+  @objc public func build() -> Liquid.VerifyIdChipNonInteractiveParameters
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc public class VerifyIdChipParameters : ObjectiveC.NSObject {
+  @objc final public let document: Liquid.IdDocumentType
+  @objc final public let verificationMethod: Liquid.VerificationMethod
+  @objc final public let showReviewScreen: Swift.Bool
+  @objc deinit
+}
+@objc public class VerifyIdChipParametersBuilder : ObjectiveC.NSObject {
+  @objc public init(document: Liquid.IdDocumentType, verificationMethod: Liquid.VerificationMethod)
+  @discardableResult
+  @objc public func setShowReviewScreen(_ showReviewScreen: Swift.Bool) -> Liquid.VerifyIdChipParametersBuilder
+  @objc public func build() -> Liquid.VerifyIdChipParameters
+  @objc deinit
+}
+@objc public protocol VerifyIdChipPassword {
+}
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class VerifyIdChipResult : ObjectiveC.NSObject {
   @objc public var result: Liquid.ProcResult
   @objc public var facePhotoVerification: Liquid.FacePhotoVerification?
@@ -581,15 +687,24 @@ extension Liquid.IdDocumentType : Swift.CaseIterable {
   @objc final public let backOrNil: UIKit.UIImage?
   @objc deinit
 }
+extension Liquid.BirthYearCalendarType : Swift.Equatable {}
+extension Liquid.BirthYearCalendarType : Swift.Hashable {}
+extension Liquid.BirthYearCalendarType : Swift.RawRepresentable {}
 extension Liquid.VerificationMethod : Swift.Equatable {}
 extension Liquid.VerificationMethod : Swift.Hashable {}
 extension Liquid.VerificationMethod : Swift.RawRepresentable {}
+extension Liquid.VerificationMethodJpki : Swift.Equatable {}
+extension Liquid.VerificationMethodJpki : Swift.Hashable {}
+extension Liquid.VerificationMethodJpki : Swift.RawRepresentable {}
 extension Liquid.IdDocumentType : Swift.Equatable {}
 extension Liquid.IdDocumentType : Swift.Hashable {}
 extension Liquid.IdDocumentType : Swift.RawRepresentable {}
 extension Liquid.IdDocumentTypeJpki : Swift.Equatable {}
 extension Liquid.IdDocumentTypeJpki : Swift.Hashable {}
 extension Liquid.IdDocumentTypeJpki : Swift.RawRepresentable {}
+extension Liquid.IdChipAvailabilityStatus : Swift.Equatable {}
+extension Liquid.IdChipAvailabilityStatus : Swift.Hashable {}
+extension Liquid.IdChipAvailabilityStatus : Swift.RawRepresentable {}
 extension Liquid.Sex : Swift.Equatable {}
 extension Liquid.Sex : Swift.Hashable {}
 extension Liquid.Sex : Swift.RawRepresentable {}
@@ -602,9 +717,6 @@ extension Liquid.ResidenceCardInfoType : Swift.RawRepresentable {}
 extension Liquid.ResidenceCardType : Swift.Equatable {}
 extension Liquid.ResidenceCardType : Swift.Hashable {}
 extension Liquid.ResidenceCardType : Swift.RawRepresentable {}
-extension Liquid.VerificationMethodJpki : Swift.Equatable {}
-extension Liquid.VerificationMethodJpki : Swift.Hashable {}
-extension Liquid.VerificationMethodJpki : Swift.RawRepresentable {}
 extension Liquid.FaceVerificationType : Swift.Equatable {}
 extension Liquid.FaceVerificationType : Swift.Hashable {}
 extension Liquid.FaceVerificationType : Swift.RawRepresentable {}

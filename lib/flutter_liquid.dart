@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'flutter_liquid_platform_interface.dart';
 
 class FlutterLiquid {
@@ -19,18 +21,20 @@ class FlutterLiquid {
     );
   }
 
-  Future<IdentifyIdChipResult> identifyIdChip({
-    required int documentTypeJpki,
-    required int verificationMethodJpki,
-    String? base64TargetData,
-    bool? enabledChipForgotPin,
-  }) {
-    return FlutterLiquidPlatform.instance.identifyIdChip(
-      documentTypeJpki: documentTypeJpki,
-      verificationMethodJpki: verificationMethodJpki,
-      base64TargetData: base64TargetData,
-      enabledChipForgotPin: enabledChipForgotPin,
-    );
+  Future<IdentifyIdChipResult> identifyIdChip() {
+    return FlutterLiquidPlatform.instance.identifyIdChip();
+  }
+
+  Future<VerifyIdChipResult> verifyIdChip(
+      {required String liquidDocumentType,
+      required String verificationMethod}) {
+    return FlutterLiquidPlatform.instance.verifyIdChip(
+        liquidDocumentType: liquidDocumentType,
+        verificationMethod: verificationMethod);
+  }
+
+  Future<VerifyFaceResult> verifyFace() {
+    return FlutterLiquidPlatform.instance.verifyFace();
   }
 
   Future<void> activate() {
@@ -205,10 +209,10 @@ class ChipData {
   final bool? residenceCardUpdateStatus;
   final String? residenceCardInfoType;
   final String? residenceCardType;
-  final String? idFacePhoto;
-  final List<String> nameExternalCharacters;
-  final List<String> previousNameExternalCharacters;
-  final List<String> addressExternalCharacters;
+  final Uint8List? idFacePhoto;
+  final List<Uint8List> nameExternalCharacters;
+  final List<Uint8List> previousNameExternalCharacters;
+  final List<Uint8List> addressExternalCharacters;
   final bool isExistLatestName;
   final bool isExistLatestAddress;
 
@@ -261,16 +265,16 @@ class ChipData {
       idFacePhoto: map.containsKey('idFacePhoto') ? map['idFacePhoto'] : null,
       nameExternalCharacters: map.containsKey('nameExternalCharacters') &&
               map['nameExternalCharacters'] != null
-          ? List<String>.from(map['nameExternalCharacters'])
+          ? List<Uint8List>.from(map['nameExternalCharacters'])
           : [],
       previousNameExternalCharacters:
           map.containsKey('previousNameExternalCharacters') &&
                   map['previousNameExternalCharacters'] != null
-              ? List<String>.from(map['previousNameExternalCharacters'])
+              ? List<Uint8List>.from(map['previousNameExternalCharacters'])
               : [],
       addressExternalCharacters: map.containsKey('addressExternalCharacters') &&
               map['addressExternalCharacters'] != null
-          ? List<String>.from(map['addressExternalCharacters'])
+          ? List<Uint8List>.from(map['addressExternalCharacters'])
           : [],
       isExistLatestName: map.containsKey('isExistLatestName')
           ? map['isExistLatestName']
@@ -288,5 +292,192 @@ extension MapExtension on Map<String, dynamic> {
       return this[key] as T?;
     }
     return null;
+  }
+}
+
+class VerifyIdChipResult {
+  VerifyIdChipResult({
+    required this.result,
+    this.autoVerificationFacePhoto,
+    this.autoVerificationFace,
+    this.autoVerificationFacePassive,
+    required this.documentImage,
+    required this.chipData,
+  });
+
+  final ProcResult result;
+  final AutoVerificationFacePhoto? autoVerificationFacePhoto;
+  final AutoVerificationFace? autoVerificationFace;
+  final AutoVerificationFacePassive? autoVerificationFacePassive;
+  final DocumentImage? documentImage;
+  final ChipData? chipData;
+
+  static VerifyIdChipResult fromMap(Map<String, dynamic> map) {
+    return VerifyIdChipResult(
+      result: ProcResult.fromMap(
+        (map['result'] as Map<dynamic, dynamic>).cast<String, dynamic>(),
+      ),
+      autoVerificationFacePhoto: map['autoVerificationFacePhoto'] != null
+          ? AutoVerificationFacePhoto.fromMap(
+              (map['autoVerificationFacePhoto'] as Map<dynamic, dynamic>)
+                  .cast<String, dynamic>(),
+            )
+          : null,
+      autoVerificationFace: map['autoVerificationFace'] != null
+          ? AutoVerificationFace.fromMap(
+              (map['autoVerificationFace'] as Map<dynamic, dynamic>)
+                  .cast<String, dynamic>(),
+            )
+          : null,
+      autoVerificationFacePassive: map['autoVerificationFacePassive'] != null
+          ? AutoVerificationFacePassive.fromMap(
+              (map['autoVerificationFacePassive'] as Map<dynamic, dynamic>)
+                  .cast<String, dynamic>(),
+            )
+          : null,
+      documentImage: map['documentImage'] != null
+          ? DocumentImage.fromMap(
+              (map['documentImage'] as Map<dynamic, dynamic>)
+                  .cast<String, dynamic>(),
+            )
+          : null,
+      chipData: map['chipData'] != null
+          ? ChipData.fromMap(
+              (map['chipData'] as Map<dynamic, dynamic>)
+                  .cast<String, dynamic>(),
+            )
+          : null,
+    );
+  }
+}
+
+class AutoVerificationFacePhoto {
+  AutoVerificationFacePhoto({
+    required this.resultType,
+    required this.score,
+  });
+
+  final int resultType;
+  final int score;
+
+  static AutoVerificationFacePhoto fromMap(Map<String, dynamic> map) {
+    return AutoVerificationFacePhoto(
+      resultType: map.containsKey('resultType') ? map['resultType'] : null,
+      score: map.containsKey('score') ? map['score'] : null,
+    );
+  }
+}
+
+class AutoVerificationFace {
+  AutoVerificationFace({
+    required this.resultType,
+    required this.score,
+  });
+
+  final int resultType;
+  final int score;
+
+  static AutoVerificationFace fromMap(Map<String, dynamic> map) {
+    return AutoVerificationFace(
+      resultType: map.containsKey('resultType') ? map['resultType'] : null,
+      score: map.containsKey('score') ? map['score'] : null,
+    );
+  }
+}
+
+class AutoVerificationFacePassive {
+  AutoVerificationFacePassive({required this.result});
+
+  final bool result;
+
+  static AutoVerificationFacePassive fromMap(Map<String, dynamic> map) {
+    return AutoVerificationFacePassive(
+      result: map.containsKey('result') ? map['result'] : null,
+    );
+  }
+}
+
+class DocumentImage {
+  DocumentImage({
+    this.front,
+    this.diagonal,
+    this.back,
+  });
+
+  final Uint8List? front;
+  final Uint8List? diagonal;
+  final Uint8List? back;
+
+  static DocumentImage fromMap(Map<String, dynamic> map) {
+    return DocumentImage(
+      front: map.containsKey('front') ? map['front'] : null,
+      diagonal: map.containsKey('diagonal') ? map['diagonal'] : null,
+      back: map.containsKey('back') ? map['back'] : null,
+    );
+  }
+}
+
+class VerifyFaceResult {
+  VerifyFaceResult({
+    required this.result,
+    this.autoVerificationFacePhoto,
+    this.autoVerificationFace,
+    this.autoVerificationFacePassive,
+    this.faceImage,
+  });
+
+  final ProcResult result;
+  final AutoVerificationFacePhoto? autoVerificationFacePhoto;
+  final AutoVerificationFace? autoVerificationFace;
+  final AutoVerificationFacePassive? autoVerificationFacePassive;
+  final FaceImage? faceImage;
+
+  static VerifyFaceResult fromMap(Map<String, dynamic> map) {
+    return VerifyFaceResult(
+      result: ProcResult.fromMap(
+        (map['result'] as Map<dynamic, dynamic>).cast<String, dynamic>(),
+      ),
+      autoVerificationFacePhoto: map['autoVerificationFacePhoto'] != null
+          ? AutoVerificationFacePhoto.fromMap(
+              (map['autoVerificationFacePhoto'] as Map<dynamic, dynamic>)
+                  .cast<String, dynamic>(),
+            )
+          : null,
+      autoVerificationFace: map['autoVerificationFace'] != null
+          ? AutoVerificationFace.fromMap(
+              (map['autoVerificationFace'] as Map<dynamic, dynamic>)
+                  .cast<String, dynamic>(),
+            )
+          : null,
+      autoVerificationFacePassive: map['autoVerificationFacePassive'] != null
+          ? AutoVerificationFacePassive.fromMap(
+              (map['autoVerificationFacePassive'] as Map<dynamic, dynamic>)
+                  .cast<String, dynamic>(),
+            )
+          : null,
+      faceImage: map['faceImage'] != null
+          ? FaceImage.fromMap(
+              (map['faceImage'] as Map<dynamic, dynamic>)
+                  .cast<String, dynamic>(),
+            )
+          : null,
+    );
+  }
+}
+
+class FaceImage {
+  FaceImage({
+    required this.faceFront,
+    required this.liveness,
+  });
+
+  final Uint8List faceFront;
+  final List<Uint8List> liveness;
+
+  static FaceImage fromMap(Map<String, dynamic> map) {
+    return FaceImage(
+      faceFront: map.containsKey('faceFront') ? map['faceFront'] : null,
+      liveness: (map['liveness'] as List<dynamic>).cast<Uint8List>(),
+    );
   }
 }
