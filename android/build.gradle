@@ -1,7 +1,7 @@
 group 'club.woodstock.flutter_liquid'
 version '1.0-SNAPSHOT'
 
-buildscript {
+script {
     ext.kotlin_version = '1.7.10'
     repositories {
         google()
@@ -76,11 +76,21 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.3.0'
+    // implementation 'androidx.appcompat:appcompat:1.3.0'
+    // implementation 'com.google.android.gms:play-services-code-scanner:16.1.0'
+    // implementation 'org.tensorflow:tensorflow-lite:2.4.0'
+    // implementation files('libs/Liquid-1.27.1.aar') // ? は導入するファイルのバージョンに置き換え / [EN] ? is replaced by the version of the file to be installed
+    // implementation files('libs/itrustekyclibrary.aar')
+    // implementation files('libs/androidtiffbitmapfactory-0.9.8.7.1.aar') // ? は導入するファイルのバージョンに置き換え / [EN] ? is replaced by the version of the file to be installed
+    // implementation files('libs/jp2-android-1.0.2.1.aar') // ? は導入するファイルのバージョンに置き換え / [EN] ? is replaced by the version of the file to be installed
+
+    implementation 'androidx.appcompat:appcompat:1.5.1' // v1.5.1 以上である必要がある。? は導入するファイルのバージョンに置き換え。 / [EN] Must be v1.5.1 or higher. ? is replaced by the version of the file to be installed.
+    implementation 'androidx.activity:activity-ktx:1.8.0' // Kotlin を含む場合: v1.8.0 以上である必要がある。? は導入するファイルのバージョンに置き換え。 / [EN] If Kotlin is included: Must be v1.8.0 or higher. ? is replaced by the version of the file to be installed.
+    // implementation 'androidx.activity:activity:?' // Java のみの場合: v1.8.0 以上である必要がある。? は導入するファイルのバージョンに置き換え。 / [EN] If Java only: Must be v1.8.0 or higher. ? is replaced by the version of the file to be installed.
     implementation 'com.google.android.gms:play-services-code-scanner:16.1.0'
     implementation 'org.tensorflow:tensorflow-lite:2.4.0'
-    implementation(name: "Liquid-1.23.0", ext: "aar")
-    implementation(name: "itrustekyclibrary", ext: "aar")
-    implementation(name: "androidtiffbitmapfactory-0.9.8.7", ext: "aar")
-    implementation(name: "jp2-android-1.0.2", ext: "aar")
+    implementation (name: "Liquid-1.27.1", ext: "aar") // ? は導入するファイルのバージョンに置き換え / [EN] ? is replaced by the version of the file to be installed
+    implementation (name: "itrustekyclibrary", ext: "aar")
+    implementation (name: "androidtiffbitmapfactory-0.9.8.7.1", ext: "aar") // ? は導入するファイルのバージョンに置き換え / [EN] ? is replaced by the version of the file to be installed
+    implementation (name: "jp2-android-1.0.2.1", ext: "aar") // ? は導入するファイルのバージョンに置き換え / [EN] ? is replaced by the version of the file to be installed
 }
