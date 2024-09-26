@@ -41,12 +41,17 @@ abstract class FlutterLiquidPlatform extends PlatformInterface {
     throw UnimplementedError('startVerify() has not been implemented.');
   }
 
-  Future<IdentifyIdChipResult> identifyIdChip({
-    required int documentTypeJpki,
-    required int verificationMethodJpki,
-    String? base64TargetData,
-    bool? enabledChipForgotPin,
-  }) {
+  Future<IdentifyIdChipResult> identifyIdChip() {
     throw UnimplementedError('identifyIdChip() has not been implemented.');
+  }
+
+  Future<VerifyIdChipResult> verifyIdChip(
+      {required String liquidDocumentType,
+      required String verificationMethod}) {
+    throw UnimplementedError('verifyIdChip() has not been implemented.');
+  }
+
+  Future<VerifyFaceResult> verifyFace() {
+    throw UnimplementedError('verifyFace() has not been implemented.');
   }
 }

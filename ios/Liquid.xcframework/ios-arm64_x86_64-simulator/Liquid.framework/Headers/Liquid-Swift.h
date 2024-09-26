@@ -312,31 +312,52 @@ SWIFT_CLASS("_TtC6Liquid14AdditionalData")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+/// 生年の和暦西暦
+typedef SWIFT_ENUM(NSInteger, BirthYearCalendarType, open) {
+/// 和暦
+  BirthYearCalendarTypeJapaneseCalendar = 1,
+/// 西暦
+  BirthYearCalendarTypeGregorianCalendar = 2,
+};
+
 
 enum Sex : NSInteger;
 @class JapaneseForeignerJudgment;
+@class MovedAbroad;
 enum ResidenceCardInfoType : NSInteger;
 enum ResidenceCardType : NSInteger;
 @class UIImage;
+@class ChipErrorData;
 
 /// チップデータ
 SWIFT_CLASS("_TtC6Liquid8ChipData")
 @interface ChipData : NSObject
 /// 氏名
 @property (nonatomic, copy) NSString * _Nullable name;
-/// 氏名（カナ）
+/// 氏名（全角カナ）
 @property (nonatomic, copy) NSString * _Nullable nameKana;
-/// 姓（カナ）候補<br />
+/// 氏名（半角カナ）
+@property (nonatomic, copy) NSString * _Nullable nameHalfWidthKana;
+/// 姓（全角カナ）候補<br />
 /// (nil: カナ氏名変換オプションの契約無し、もしくはカナ候補なし)
 @property (nonatomic, copy) NSArray<NSString *> * _Nullable lastNameKanaCandidates;
-/// 名（カナ）候補<br />
+/// 姓（半角カナ）候補<br />
+/// (nil:カナ氏名変換オプションの契約無し、もしくはカナ候補なし)
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable lastNameHalfWidthKanaCandidates;
+/// 名（全角カナ）候補<br />
 /// (nil: カナ氏名変換オプションの契約無し、もしくはカナ候補なし)
 @property (nonatomic, copy) NSArray<NSString *> * _Nullable firstNameKanaCandidates;
+/// 名（半角カナ）候補<br />
+/// (nil:カナ氏名変換オプションの契約無し、もしくはカナ候補なし)
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable firstNameHalfWidthKanaCandidates;
 /// 旧氏名
 @property (nonatomic, copy) NSString * _Nullable previousName;
-/// 旧姓（カナ）候補<br />
+/// 旧姓（全角カナ）候補<br />
 /// (nil: カナ氏名変換オプションの契約無し、もしくはカナ候補なし)
 @property (nonatomic, copy) NSArray<NSString *> * _Nullable previousLastNameKanaCandidates;
+/// 旧姓（半角カナ）候補<br />
+/// (nil:カナ氏名変換オプションの契約無し、もしくはカナ候補なし)
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable previousLastNameHalfWidthKanaCandidates;
 /// 生年月日
 @property (nonatomic, copy) NSString * _Nullable birthday;
 /// 住所
@@ -364,6 +385,10 @@ SWIFT_CLASS("_TtC6Liquid8ChipData")
 /// 日本人/外国人判定<br />
 /// ※推測値のため、日本人であっても判定結果で外国人が返却される場合（あるいはその逆）があります
 @property (nonatomic, strong) JapaneseForeignerJudgment * _Nullable japaneseForeignerJudgment;
+/// 国外転出有無
+@property (nonatomic, strong) MovedAbroad * _Nullable movedAbroad;
+/// 国外転出予定日
+@property (nonatomic, copy) NSString * _Nullable plannedAbroadMoveDate;
 /// 在留カードの裏面資格外活動包括許可欄
 @property (nonatomic, copy) NSString * _Nullable residenceCardComprehensivePermission;
 /// 在留カードの裏面資格外活動個別許可欄
@@ -422,6 +447,21 @@ SWIFT_CLASS("_TtC6Liquid8ChipData")
 /// 更新住所の有無<br />
 /// (true: 住所の記載事項変更がある場合、false: 住所の記載事項変更がない場合)
 @property (nonatomic) BOOL isExistLatestAddress;
+/// ICカード読取エラー関連情報<br />
+/// 処理結果が以下の場合に返却される<br />
+/// ・ICチップでPIN間違い “chip_pin_invalid” (詳細エラーコード= SE20015)
+@property (nonatomic, strong) ChipErrorData * _Nullable chipErrorData;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// ICカード読取エラー関連情報
+SWIFT_CLASS("_TtC6Liquid13ChipErrorData")
+@interface ChipErrorData : NSObject
+/// ICカードに搭載されるチップのPIN照合ができる残回数<br />
+/// ※残回数を超過した場合、チップがロックされます
+@property (nonatomic, readonly) NSInteger attemptsRemainingUntilChipLocked;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -510,6 +550,30 @@ SWIFT_CLASS("_TtC6Liquid30DriverLicenseExternalCharacter")
 /// \param image 外字の画像
 ///
 - (nonnull instancetype)initWithSize:(NSInteger)size image:(NSData * _Nonnull)image OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// パスワード
+SWIFT_PROTOCOL("_TtP6Liquid20VerifyIdChipPassword_")
+@protocol VerifyIdChipPassword
+@end
+
+
+/// パスワード・運転免許証用
+SWIFT_CLASS("_TtC6Liquid21DriverLicensePassword")
+@interface DriverLicensePassword : NSObject <VerifyIdChipPassword>
+/// 暗証番号1
+@property (nonatomic, readonly, copy) NSString * _Nonnull pin1;
+/// 暗証番号2
+@property (nonatomic, readonly, copy) NSString * _Nonnull pin2;
+/// コンストラクタ
+/// \param pin1 暗証番号1
+///
+/// \param pin2 暗証番号2
+///
+- (nonnull instancetype)initWithPin1:(NSString * _Nonnull)pin1 pin2:(NSString * _Nonnull)pin2 OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -677,6 +741,16 @@ typedef SWIFT_ENUM(NSInteger, FaceVerificationType, open) {
 };
 
 
+/// ICカード(NFC) 読み取り状態
+typedef SWIFT_ENUM(NSInteger, IdChipAvailabilityStatus, open) {
+/// 対応<br />
+/// ※NFC搭載あり
+  IdChipAvailabilityStatusEnabled = 0,
+/// 非対応<br />
+/// ※NFC搭載なし
+  IdChipAvailabilityStatusUnsupported = 1,
+};
+
 /// 本人確認書類種別
 typedef SWIFT_ENUM(NSInteger, IdDocumentType, open) {
 /// 運転免許証
@@ -725,6 +799,8 @@ typedef SWIFT_ENUM(NSInteger, IdDocumentType, open) {
 /// 社員証<br />
 /// ※非法令（法令準拠書類ではありません）
   IdDocumentTypeEmployeeIdCard = 21,
+/// マイナンバーカード（＋個人番号）
+  IdDocumentTypeMynumberCardWithMyNumber = 22,
 };
 
 /// 本人確認書類種別(公的個人認証用)
@@ -744,6 +820,41 @@ SWIFT_CLASS("_TtC6Liquid22IdDocumentVerification")
 @property (nonatomic, readonly) BOOL result;
 /// 判定スコア値
 @property (nonatomic, readonly) double score;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// 公的個人認証ファンクション（画面なし）用設定値
+/// <pre>
+/// 例:
+/// let parameters = IdentifyIdChipNonInteractiveParametersBuilder(password: 署名用電子証明書のパスワード)
+///     .setBase64TargetData(電子署名生成処理で使用する電子署名対象データをBASE64エンコードした値)
+///     .build()
+/// </pre>
+SWIFT_CLASS("_TtC6Liquid38IdentifyIdChipNonInteractiveParameters")
+@interface IdentifyIdChipNonInteractiveParameters : NSObject
+/// 署名用電子証明書のパスワード
+@property (nonatomic, readonly, copy) NSString * _Nonnull password;
+/// 電子署名生成処理で使用する電子署名対象データをBASE64エンコードした値<br />※null/空文字可
+@property (nonatomic, readonly, copy) NSString * _Nullable base64TargetData;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+
+/// 公的個人認証ファンクション（画面なし）用設定値ビルダー
+SWIFT_CLASS("_TtC6Liquid45IdentifyIdChipNonInteractiveParametersBuilder")
+@interface IdentifyIdChipNonInteractiveParametersBuilder : NSObject
+/// 公的個人認証ファンクション（画面なし）用設定値ビルダー
+/// \param password 署名用電子証明書のパスワード
+///
+- (nonnull instancetype)initWithPassword:(NSString * _Nonnull)password OBJC_DESIGNATED_INITIALIZER;
+/// 電子署名生成処理で使用する電子署名対象データをBASE64エンコードした値<br />※null/空文字可
+- (IdentifyIdChipNonInteractiveParametersBuilder * _Nonnull)setBase64TargetData:(NSString * _Nullable)base64TargetData;
+///
+- (IdentifyIdChipNonInteractiveParameters * _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -776,6 +887,7 @@ SWIFT_CLASS("_TtC6Liquid24IdentifyIdChipParameters")
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
 
 
 /// 公的個人認証ファンクション用設定値ビルダー
@@ -851,6 +963,18 @@ SWIFT_CLASS("_TtC6Liquid12JpkiEvidence")
 @property (nonatomic, copy) NSString * _Nullable issuerDn;
 /// 電子署名識別子
 @property (nonatomic, copy) NSString * _Nullable signatureId;
+/// 失効事由<br />
+/// 0 - 有効<br />
+/// 1 - 交付前に何らかの問題が発生したため破棄<br />
+/// 2 - マイナンバーカードを紛失またはPINが漏洩等の理由での本人の申し出による利用停止<br />
+/// 3 - CAの秘密鍵が漏洩<br />
+/// 4 - 氏名、住所等の変更または本人の死亡、海外転出<br />
+/// 5 - 通常記録されない失効事由。現況不明<br />
+/// 6 - 海外転出等の理由での本人の申し出による利用停止<br />
+/// 7 - マイナンバーカードを紛失またはPINが漏洩した疑いがあり本人の申し出による利用停止<br />
+/// 8 - 不明な失効事由<br />
+/// -1 - 公的個人認証が成功していないため、失効事由未取得
+@property (nonatomic) NSInteger revokedReason;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -872,6 +996,7 @@ SWIFT_CLASS("_TtC6Liquid10JpkiResult")
 @class VerifyIdDocumentResult;
 enum VerificationMethod : NSInteger;
 @class VerifyIdDocumentParameters;
+@class VerifyIdChipParameters;
 @class VerifyIdChipResult;
 @class OcrResult;
 @class TermsOfUseSettings;
@@ -889,13 +1014,28 @@ SWIFT_CLASS("_TtC6Liquid10LiquidEkyc")
 /// </ul>
 /// \param endpoint API の endpoint URL
 ///
+/// \param applicant Connector『LIQUID_eKYC_017_SDK本人確認申請API』に引き渡した連携ID
+///
+/// \param token Connector『LIQUID_eKYC_017_SDK本人確認申請API』から受け取った認証トークン
+///
++ (void)startVerifyWithEndpoint:(NSURL * _Nonnull)endpoint applicant:(NSString * _Nonnull)applicant token:(NSString * _Nonnull)token;
+/// 【非推奨】初期化ファンクション<br />
+/// ・この処理でセッション情報の初期化が行われるので注意してください<br />
+/// ・セッションの最中にこの処理が呼び出された場合、セッション中の情報は破棄されます
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+/// </ul>
+/// \param endpoint API の endpoint URL
+///
 /// \param token Connector『LIQUID_eKYC_017_SDK本人確認申請API』から受け取った認証トークン
 ///
 /// \param applicant Connector『LIQUID_eKYC_017_SDK本人確認申請API』に引き渡した連携ID
 ///
 /// \param apiKey SDK用APIキー
 ///
-+ (void)startVerifyWithEndpoint:(NSURL * _Nonnull)endpoint token:(NSString * _Nonnull)token applicant:(NSString * _Nonnull)applicant apiKey:(NSString * _Nonnull)apiKey;
++ (void)startVerifyWithEndpoint:(NSURL * _Nonnull)endpoint token:(NSString * _Nonnull)token applicant:(NSString * _Nonnull)applicant apiKey:(NSString * _Nonnull)apiKey SWIFT_DEPRECATED;
 /// 初期化ファンクション（評価版用）<br />
 /// ・この処理でセッション情報の初期化が行われるので注意してください<br />
 /// ・セッションの最中にこの処理が呼び出された場合、セッション中の情報は破棄されます
@@ -954,6 +1094,24 @@ SWIFT_CLASS("_TtC6Liquid10LiquidEkyc")
 /// \param completion ファンクションの処理結果が返ります
 ///
 + (void)verifyIdDocumentWithParameters:(VerifyIdDocumentParameters * _Nonnull)verifyIdDocumentParameters on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdDocumentResult * _Nonnull))completion;
+/// 書類ICカードファンクション
+/// \param verifyIdChipParameters 書類ICカードファンクション用設定値
+///
+/// \param viewController 指定された viewController 上で画面が表示されます
+///
+/// \param completion ファンクションの処理結果が返ります
+///
++ (void)verifyIdChipWithParameters:(VerifyIdChipParameters * _Nonnull)verifyIdChipParameters on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdChipResult * _Nonnull))completion;
+/// 【非推奨】書類ICカードファンクション
+/// \param document 本人確認書類種別
+///
+/// \param verificationMethod 身元確認方式
+///
+/// \param viewController 指定された viewController 上で画面が表示されます
+///
+/// \param completion ファンクションの処理結果が返ります
+///
++ (void)verifyIdChip:(enum IdDocumentType)document :(enum VerificationMethod)verificationMethod on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdChipResult * _Nonnull))completion SWIFT_DEPRECATED;
 /// 【非推奨】書類ICカードファンクション（へ対応用）
 /// \param document 本人確認書類種別
 ///
@@ -964,18 +1122,10 @@ SWIFT_CLASS("_TtC6Liquid10LiquidEkyc")
 /// \param completion ファンクションの処理結果が返ります
 ///
 + (void)verifyIdChip:(enum IdDocumentType)document chipVerifyKey:(NSString * _Nonnull)chipVerifyKey on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdChipResult * _Nonnull))completion SWIFT_DEPRECATED;
-/// 書類ICカードファンクション
-/// \param document 本人確認書類種別
-///
-/// \param verificationMethod 身元確認方式
-///
-/// \param viewController 指定された viewController 上で画面が表示されます
-///
-/// \param completion ファンクションの処理結果が返ります
-///
-+ (void)verifyIdChip:(enum IdDocumentType)document :(enum VerificationMethod)verificationMethod on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdChipResult * _Nonnull))completion;
 /// 書類ICカードファンクション（署名検証のみ用）
 /// \param verificationMethod 身元確認方式
+///
+/// \param showReviewScreen 確認画面の表示有無<br />(true: 撮影写真の確認画面を表示する、false: 撮影写真の確認画面を表示しない)<br />・身元確認方式が在留カードまたは特別永住者証明書を指定した場合のみ有効です<br />・身元確認方式がそれ以外の場合はいずれの値も無視します
 ///
 /// \param signature 署名
 ///
@@ -987,7 +1137,7 @@ SWIFT_CLASS("_TtC6Liquid10LiquidEkyc")
 ///
 /// \param completion ファンクションの処理結果が返ります
 ///
-+ (void)verifyIdChip:(enum VerificationMethod)verificationMethod signature:(NSString * _Nonnull)signature verifyingParams:(NSString * _Nonnull)verifyingParams rawData:(ICRawData * _Nonnull)rawData on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdChipResult * _Nonnull))completion;
++ (void)verifyIdChip:(enum VerificationMethod)verificationMethod showReviewScreen:(BOOL)showReviewScreen signature:(NSString * _Nonnull)signature verifyingParams:(NSString * _Nonnull)verifyingParams rawData:(ICRawData * _Nonnull)rawData on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdChipResult * _Nonnull))completion;
 /// 書類ICカードファンクション（署名検証のみ用(在留/特別永住 裏面なし)）
 /// \param verificationMethod 身元確認方式
 ///
@@ -1065,6 +1215,46 @@ SWIFT_CLASS("_TtC6Liquid10LiquidEkyc")
 @end
 
 
+@interface LiquidEkyc (SWIFT_EXTENSION(Liquid))
+/// ICカード読み取り可否ファンクション<br />
+/// ・初期化ファンクション実行前でも利用可能です
++ (enum IdChipAvailabilityStatus)checkIdChipAvailability SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
+@interface LiquidEkyc (SWIFT_EXTENSION(Liquid))
+/// 公的個人認証ファンクション（画面なし）（ワ対応用）
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     parameters: 公的個人認証ファンクション（画面なし）用設定値
+///   </li>
+///   <li>
+///     viewController: 指定された viewController 上で画面が表示されます
+///   </li>
+///   <li>
+///     completion: ファンクションの処理結果が返ります
+///   </li>
+/// </ul>
++ (void)identifyIdChipNonInteractiveWithParameters:(IdentifyIdChipNonInteractiveParameters * _Nonnull)parameters on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(IdentifyIdChipResult * _Nonnull))completion;
+@end
+
+@class VerifyIdChipNonInteractiveParameters;
+
+@interface LiquidEkyc (SWIFT_EXTENSION(Liquid))
+/// 書類ICカードファンクション（画面なし）
+/// \param verifyIdChipNonInteractiveParameters 書類ICカードファンクション（画面なし）用設定値
+///
+/// \param viewController 指定された viewController 上で画面が表示されます
+///
+/// \param completion ファンクションの処理結果が返ります
+///
++ (void)verifyIdChipNonInteractive:(VerifyIdChipNonInteractiveParameters * _Nonnull)parameters on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdChipResult * _Nonnull))completion;
+@end
+
+
 /// ライブネスチェック
 SWIFT_CLASS("_TtC6Liquid8Liveness")
 @interface Liveness : NSObject
@@ -1082,6 +1272,46 @@ SWIFT_CLASS("_TtC6Liquid8Liveness")
 @property (nonatomic, readonly, strong) UIImage * _Nonnull pattern6;
 /// 含まれる画像については『LIQUID eKYC Applicant SDK版インタフェース仕様書(SDK Interface Specifications)』をご確認ください
 @property (nonatomic, readonly, strong) UIImage * _Nonnull pattern7;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// 国外転出有無
+SWIFT_CLASS("_TtC6Liquid11MovedAbroad")
+@interface MovedAbroad : NSObject
+/// 不明（マイナンバーカードの国外転出継続利用対応以前のデータ）
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) MovedAbroad * _Nonnull unknown;)
++ (MovedAbroad * _Nonnull)unknown SWIFT_WARN_UNUSED_RESULT;
++ (void)setUnknown:(MovedAbroad * _Nonnull)value;
+/// 国外転出無し
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) MovedAbroad * _Nonnull no;)
++ (MovedAbroad * _Nonnull)no SWIFT_WARN_UNUSED_RESULT;
++ (void)setNo:(MovedAbroad * _Nonnull)value;
+/// 国外転出有り
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) MovedAbroad * _Nonnull yes;)
++ (MovedAbroad * _Nonnull)yes SWIFT_WARN_UNUSED_RESULT;
++ (void)setYes:(MovedAbroad * _Nonnull)value;
+///
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// パスワード・マイナンバーカード用
+SWIFT_CLASS("_TtC6Liquid20MyNumberCardPassword")
+@interface MyNumberCardPassword : NSObject <VerifyIdChipPassword>
+/// 照合番号B
+@property (nonatomic, readonly, copy) NSString * _Nonnull password;
+/// 生年の和暦西暦
+@property (nonatomic, readonly) enum BirthYearCalendarType birthYearCalendarType;
+/// コンストラクタ
+/// \param password 照合番号B
+///
+/// \param birthYearCalendarType 生年の和暦西暦
+///
+- (nonnull instancetype)initWithPassword:(NSString * _Nonnull)password birthYearCalendarType:(enum BirthYearCalendarType)birthYearCalendarType OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1307,6 +1537,10 @@ typedef SWIFT_ENUM(NSInteger, ResultStatus, open) {
   ResultStatusTermsDoNotAgree = 21,
 /// 通信失敗 “communication_failure”
   ResultStatusCommunicationFailure = 22,
+/// ICチップでPIN間違い “chip_pin_invalid”
+  ResultStatusChipPinInvalid = 23,
+/// ICチップの読み取り失敗 “chip_read_error”
+  ResultStatusChipReadError = 24,
 };
 
 /// 性別
@@ -1401,7 +1635,6 @@ SWIFT_CLASS("_TtC6Liquid18TermsOfUseSettings")
 
 
 
-
 /// 身元確認方式
 typedef SWIFT_ENUM(NSInteger, VerificationMethod, open) {
 /// ヘ対応
@@ -1451,6 +1684,8 @@ SWIFT_CLASS("_TtC6Liquid20VerifyFaceParameters")
 /// 判定方式<br />
 /// (アクティブ判定【デフォルト値】、パッシブ判定）
 @property (nonatomic, readonly) enum FaceVerificationType faceVerificationType;
+/// Liquid指定 特殊用途事業者のみ設定
+@property (nonatomic, readonly, copy) NSString * _Nonnull controlCharacter;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1465,6 +1700,8 @@ SWIFT_CLASS("_TtC6Liquid27VerifyFaceParametersBuilder")
 /// 判定方式<br />
 /// (アクティブ判定【デフォルト値】、パッシブ判定）
 - (VerifyFaceParametersBuilder * _Nonnull)setFaceVerificationType:(enum FaceVerificationType)verifyType;
+/// Liquid指定 特殊用途事業者のみ設定
+- (VerifyFaceParametersBuilder * _Nonnull)setControlCharacter:(NSString * _Nonnull)controlCharacter;
 ///
 - (VerifyFaceParameters * _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -1487,6 +1724,95 @@ SWIFT_CLASS("_TtC6Liquid16VerifyFaceResult")
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
+
+/// 書類ICカードファンクション（画面なし）用設定値
+/// <pre>
+/// 例: 運転免許証時
+/// let parameters = VerifyIdChipNonInteractiveParametersBuilder(password: DriverLicensePassword(暗証番号1, 暗証番号2))
+///     .build()
+///
+/// 例: マイナンバーカード時
+/// let parameters = VerifyIdChipNonInteractiveParametersBuilder(password: MyNumberCardPassword(照合番号B, 生年の和暦西暦))
+///     .build()
+/// </pre>
+SWIFT_CLASS("_TtC6Liquid36VerifyIdChipNonInteractiveParameters")
+@interface VerifyIdChipNonInteractiveParameters : NSObject
+/// パスワード<br />
+/// 運転免許証時: DriverLicensePassword<br/>
+/// マイナンバーカード時: MyNumberCardPassword
+@property (nonatomic, readonly, strong) id <VerifyIdChipPassword> _Nonnull password;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// 書類ICカードファンクション（画面なし）用設定値ビルダー
+SWIFT_CLASS("_TtC6Liquid43VerifyIdChipNonInteractiveParametersBuilder")
+@interface VerifyIdChipNonInteractiveParametersBuilder : NSObject
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     password: パスワード<br/>
+///     運転免許証時: DriverLicensePassword<br/>
+///     マイナンバーカード時: MyNumberCardPassword
+///   </li>
+/// </ul>
+- (nonnull instancetype)initWithPassword:(id <VerifyIdChipPassword> _Nonnull)password OBJC_DESIGNATED_INITIALIZER;
+///
+- (VerifyIdChipNonInteractiveParameters * _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// 書類ICカードファンクション用設定値
+/// <pre>
+/// 例:
+/// let parameters = VerifyIdChipParametersBuilder(document: 本人確認書類種別, verificationMethod: 身元確認方式)
+///     .setShowReviewScreen(確認画面の表示有無)
+///     .build()
+///  </pre>
+SWIFT_CLASS("_TtC6Liquid22VerifyIdChipParameters")
+@interface VerifyIdChipParameters : NSObject
+/// 本人確認書類種別
+@property (nonatomic, readonly) enum IdDocumentType document;
+/// 身元確認方式
+@property (nonatomic, readonly) enum VerificationMethod verificationMethod;
+/// 確認画面の表示有無<br />
+/// (true: 撮影写真の確認画面を表示する【デフォルト値】、false: 撮影写真の確認画面を表示しない)
+@property (nonatomic, readonly) BOOL showReviewScreen;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// 書類ICカードファンクション用設定値ビルダー
+SWIFT_CLASS("_TtC6Liquid29VerifyIdChipParametersBuilder")
+@interface VerifyIdChipParametersBuilder : NSObject
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     document: 本人確認書類種別
+///   </li>
+///   <li>
+///     verificationMethod: 身元確認方式
+///   </li>
+/// </ul>
+- (nonnull instancetype)initWithDocument:(enum IdDocumentType)document verificationMethod:(enum VerificationMethod)verificationMethod OBJC_DESIGNATED_INITIALIZER;
+/// 確認画面の表示有無<br />
+/// (true: 撮影写真の確認画面を表示する【デフォルト値】、false: 撮影写真の確認画面を表示しない)
+- (VerifyIdChipParametersBuilder * _Nonnull)setShowReviewScreen:(BOOL)showReviewScreen;
+///
+- (VerifyIdChipParameters * _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 
 
 /// 書類ICカードファンクションの結果
@@ -1896,31 +2222,52 @@ SWIFT_CLASS("_TtC6Liquid14AdditionalData")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+/// 生年の和暦西暦
+typedef SWIFT_ENUM(NSInteger, BirthYearCalendarType, open) {
+/// 和暦
+  BirthYearCalendarTypeJapaneseCalendar = 1,
+/// 西暦
+  BirthYearCalendarTypeGregorianCalendar = 2,
+};
+
 
 enum Sex : NSInteger;
 @class JapaneseForeignerJudgment;
+@class MovedAbroad;
 enum ResidenceCardInfoType : NSInteger;
 enum ResidenceCardType : NSInteger;
 @class UIImage;
+@class ChipErrorData;
 
 /// チップデータ
 SWIFT_CLASS("_TtC6Liquid8ChipData")
 @interface ChipData : NSObject
 /// 氏名
 @property (nonatomic, copy) NSString * _Nullable name;
-/// 氏名（カナ）
+/// 氏名（全角カナ）
 @property (nonatomic, copy) NSString * _Nullable nameKana;
-/// 姓（カナ）候補<br />
+/// 氏名（半角カナ）
+@property (nonatomic, copy) NSString * _Nullable nameHalfWidthKana;
+/// 姓（全角カナ）候補<br />
 /// (nil: カナ氏名変換オプションの契約無し、もしくはカナ候補なし)
 @property (nonatomic, copy) NSArray<NSString *> * _Nullable lastNameKanaCandidates;
-/// 名（カナ）候補<br />
+/// 姓（半角カナ）候補<br />
+/// (nil:カナ氏名変換オプションの契約無し、もしくはカナ候補なし)
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable lastNameHalfWidthKanaCandidates;
+/// 名（全角カナ）候補<br />
 /// (nil: カナ氏名変換オプションの契約無し、もしくはカナ候補なし)
 @property (nonatomic, copy) NSArray<NSString *> * _Nullable firstNameKanaCandidates;
+/// 名（半角カナ）候補<br />
+/// (nil:カナ氏名変換オプションの契約無し、もしくはカナ候補なし)
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable firstNameHalfWidthKanaCandidates;
 /// 旧氏名
 @property (nonatomic, copy) NSString * _Nullable previousName;
-/// 旧姓（カナ）候補<br />
+/// 旧姓（全角カナ）候補<br />
 /// (nil: カナ氏名変換オプションの契約無し、もしくはカナ候補なし)
 @property (nonatomic, copy) NSArray<NSString *> * _Nullable previousLastNameKanaCandidates;
+/// 旧姓（半角カナ）候補<br />
+/// (nil:カナ氏名変換オプションの契約無し、もしくはカナ候補なし)
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable previousLastNameHalfWidthKanaCandidates;
 /// 生年月日
 @property (nonatomic, copy) NSString * _Nullable birthday;
 /// 住所
@@ -1948,6 +2295,10 @@ SWIFT_CLASS("_TtC6Liquid8ChipData")
 /// 日本人/外国人判定<br />
 /// ※推測値のため、日本人であっても判定結果で外国人が返却される場合（あるいはその逆）があります
 @property (nonatomic, strong) JapaneseForeignerJudgment * _Nullable japaneseForeignerJudgment;
+/// 国外転出有無
+@property (nonatomic, strong) MovedAbroad * _Nullable movedAbroad;
+/// 国外転出予定日
+@property (nonatomic, copy) NSString * _Nullable plannedAbroadMoveDate;
 /// 在留カードの裏面資格外活動包括許可欄
 @property (nonatomic, copy) NSString * _Nullable residenceCardComprehensivePermission;
 /// 在留カードの裏面資格外活動個別許可欄
@@ -2006,6 +2357,21 @@ SWIFT_CLASS("_TtC6Liquid8ChipData")
 /// 更新住所の有無<br />
 /// (true: 住所の記載事項変更がある場合、false: 住所の記載事項変更がない場合)
 @property (nonatomic) BOOL isExistLatestAddress;
+/// ICカード読取エラー関連情報<br />
+/// 処理結果が以下の場合に返却される<br />
+/// ・ICチップでPIN間違い “chip_pin_invalid” (詳細エラーコード= SE20015)
+@property (nonatomic, strong) ChipErrorData * _Nullable chipErrorData;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// ICカード読取エラー関連情報
+SWIFT_CLASS("_TtC6Liquid13ChipErrorData")
+@interface ChipErrorData : NSObject
+/// ICカードに搭載されるチップのPIN照合ができる残回数<br />
+/// ※残回数を超過した場合、チップがロックされます
+@property (nonatomic, readonly) NSInteger attemptsRemainingUntilChipLocked;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -2094,6 +2460,30 @@ SWIFT_CLASS("_TtC6Liquid30DriverLicenseExternalCharacter")
 /// \param image 外字の画像
 ///
 - (nonnull instancetype)initWithSize:(NSInteger)size image:(NSData * _Nonnull)image OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// パスワード
+SWIFT_PROTOCOL("_TtP6Liquid20VerifyIdChipPassword_")
+@protocol VerifyIdChipPassword
+@end
+
+
+/// パスワード・運転免許証用
+SWIFT_CLASS("_TtC6Liquid21DriverLicensePassword")
+@interface DriverLicensePassword : NSObject <VerifyIdChipPassword>
+/// 暗証番号1
+@property (nonatomic, readonly, copy) NSString * _Nonnull pin1;
+/// 暗証番号2
+@property (nonatomic, readonly, copy) NSString * _Nonnull pin2;
+/// コンストラクタ
+/// \param pin1 暗証番号1
+///
+/// \param pin2 暗証番号2
+///
+- (nonnull instancetype)initWithPin1:(NSString * _Nonnull)pin1 pin2:(NSString * _Nonnull)pin2 OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -2261,6 +2651,16 @@ typedef SWIFT_ENUM(NSInteger, FaceVerificationType, open) {
 };
 
 
+/// ICカード(NFC) 読み取り状態
+typedef SWIFT_ENUM(NSInteger, IdChipAvailabilityStatus, open) {
+/// 対応<br />
+/// ※NFC搭載あり
+  IdChipAvailabilityStatusEnabled = 0,
+/// 非対応<br />
+/// ※NFC搭載なし
+  IdChipAvailabilityStatusUnsupported = 1,
+};
+
 /// 本人確認書類種別
 typedef SWIFT_ENUM(NSInteger, IdDocumentType, open) {
 /// 運転免許証
@@ -2309,6 +2709,8 @@ typedef SWIFT_ENUM(NSInteger, IdDocumentType, open) {
 /// 社員証<br />
 /// ※非法令（法令準拠書類ではありません）
   IdDocumentTypeEmployeeIdCard = 21,
+/// マイナンバーカード（＋個人番号）
+  IdDocumentTypeMynumberCardWithMyNumber = 22,
 };
 
 /// 本人確認書類種別(公的個人認証用)
@@ -2328,6 +2730,41 @@ SWIFT_CLASS("_TtC6Liquid22IdDocumentVerification")
 @property (nonatomic, readonly) BOOL result;
 /// 判定スコア値
 @property (nonatomic, readonly) double score;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// 公的個人認証ファンクション（画面なし）用設定値
+/// <pre>
+/// 例:
+/// let parameters = IdentifyIdChipNonInteractiveParametersBuilder(password: 署名用電子証明書のパスワード)
+///     .setBase64TargetData(電子署名生成処理で使用する電子署名対象データをBASE64エンコードした値)
+///     .build()
+/// </pre>
+SWIFT_CLASS("_TtC6Liquid38IdentifyIdChipNonInteractiveParameters")
+@interface IdentifyIdChipNonInteractiveParameters : NSObject
+/// 署名用電子証明書のパスワード
+@property (nonatomic, readonly, copy) NSString * _Nonnull password;
+/// 電子署名生成処理で使用する電子署名対象データをBASE64エンコードした値<br />※null/空文字可
+@property (nonatomic, readonly, copy) NSString * _Nullable base64TargetData;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+
+/// 公的個人認証ファンクション（画面なし）用設定値ビルダー
+SWIFT_CLASS("_TtC6Liquid45IdentifyIdChipNonInteractiveParametersBuilder")
+@interface IdentifyIdChipNonInteractiveParametersBuilder : NSObject
+/// 公的個人認証ファンクション（画面なし）用設定値ビルダー
+/// \param password 署名用電子証明書のパスワード
+///
+- (nonnull instancetype)initWithPassword:(NSString * _Nonnull)password OBJC_DESIGNATED_INITIALIZER;
+/// 電子署名生成処理で使用する電子署名対象データをBASE64エンコードした値<br />※null/空文字可
+- (IdentifyIdChipNonInteractiveParametersBuilder * _Nonnull)setBase64TargetData:(NSString * _Nullable)base64TargetData;
+///
+- (IdentifyIdChipNonInteractiveParameters * _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -2360,6 +2797,7 @@ SWIFT_CLASS("_TtC6Liquid24IdentifyIdChipParameters")
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
 
 
 /// 公的個人認証ファンクション用設定値ビルダー
@@ -2435,6 +2873,18 @@ SWIFT_CLASS("_TtC6Liquid12JpkiEvidence")
 @property (nonatomic, copy) NSString * _Nullable issuerDn;
 /// 電子署名識別子
 @property (nonatomic, copy) NSString * _Nullable signatureId;
+/// 失効事由<br />
+/// 0 - 有効<br />
+/// 1 - 交付前に何らかの問題が発生したため破棄<br />
+/// 2 - マイナンバーカードを紛失またはPINが漏洩等の理由での本人の申し出による利用停止<br />
+/// 3 - CAの秘密鍵が漏洩<br />
+/// 4 - 氏名、住所等の変更または本人の死亡、海外転出<br />
+/// 5 - 通常記録されない失効事由。現況不明<br />
+/// 6 - 海外転出等の理由での本人の申し出による利用停止<br />
+/// 7 - マイナンバーカードを紛失またはPINが漏洩した疑いがあり本人の申し出による利用停止<br />
+/// 8 - 不明な失効事由<br />
+/// -1 - 公的個人認証が成功していないため、失効事由未取得
+@property (nonatomic) NSInteger revokedReason;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -2456,6 +2906,7 @@ SWIFT_CLASS("_TtC6Liquid10JpkiResult")
 @class VerifyIdDocumentResult;
 enum VerificationMethod : NSInteger;
 @class VerifyIdDocumentParameters;
+@class VerifyIdChipParameters;
 @class VerifyIdChipResult;
 @class OcrResult;
 @class TermsOfUseSettings;
@@ -2473,13 +2924,28 @@ SWIFT_CLASS("_TtC6Liquid10LiquidEkyc")
 /// </ul>
 /// \param endpoint API の endpoint URL
 ///
+/// \param applicant Connector『LIQUID_eKYC_017_SDK本人確認申請API』に引き渡した連携ID
+///
+/// \param token Connector『LIQUID_eKYC_017_SDK本人確認申請API』から受け取った認証トークン
+///
++ (void)startVerifyWithEndpoint:(NSURL * _Nonnull)endpoint applicant:(NSString * _Nonnull)applicant token:(NSString * _Nonnull)token;
+/// 【非推奨】初期化ファンクション<br />
+/// ・この処理でセッション情報の初期化が行われるので注意してください<br />
+/// ・セッションの最中にこの処理が呼び出された場合、セッション中の情報は破棄されます
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+/// </ul>
+/// \param endpoint API の endpoint URL
+///
 /// \param token Connector『LIQUID_eKYC_017_SDK本人確認申請API』から受け取った認証トークン
 ///
 /// \param applicant Connector『LIQUID_eKYC_017_SDK本人確認申請API』に引き渡した連携ID
 ///
 /// \param apiKey SDK用APIキー
 ///
-+ (void)startVerifyWithEndpoint:(NSURL * _Nonnull)endpoint token:(NSString * _Nonnull)token applicant:(NSString * _Nonnull)applicant apiKey:(NSString * _Nonnull)apiKey;
++ (void)startVerifyWithEndpoint:(NSURL * _Nonnull)endpoint token:(NSString * _Nonnull)token applicant:(NSString * _Nonnull)applicant apiKey:(NSString * _Nonnull)apiKey SWIFT_DEPRECATED;
 /// 初期化ファンクション（評価版用）<br />
 /// ・この処理でセッション情報の初期化が行われるので注意してください<br />
 /// ・セッションの最中にこの処理が呼び出された場合、セッション中の情報は破棄されます
@@ -2538,6 +3004,24 @@ SWIFT_CLASS("_TtC6Liquid10LiquidEkyc")
 /// \param completion ファンクションの処理結果が返ります
 ///
 + (void)verifyIdDocumentWithParameters:(VerifyIdDocumentParameters * _Nonnull)verifyIdDocumentParameters on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdDocumentResult * _Nonnull))completion;
+/// 書類ICカードファンクション
+/// \param verifyIdChipParameters 書類ICカードファンクション用設定値
+///
+/// \param viewController 指定された viewController 上で画面が表示されます
+///
+/// \param completion ファンクションの処理結果が返ります
+///
++ (void)verifyIdChipWithParameters:(VerifyIdChipParameters * _Nonnull)verifyIdChipParameters on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdChipResult * _Nonnull))completion;
+/// 【非推奨】書類ICカードファンクション
+/// \param document 本人確認書類種別
+///
+/// \param verificationMethod 身元確認方式
+///
+/// \param viewController 指定された viewController 上で画面が表示されます
+///
+/// \param completion ファンクションの処理結果が返ります
+///
++ (void)verifyIdChip:(enum IdDocumentType)document :(enum VerificationMethod)verificationMethod on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdChipResult * _Nonnull))completion SWIFT_DEPRECATED;
 /// 【非推奨】書類ICカードファンクション（へ対応用）
 /// \param document 本人確認書類種別
 ///
@@ -2548,18 +3032,10 @@ SWIFT_CLASS("_TtC6Liquid10LiquidEkyc")
 /// \param completion ファンクションの処理結果が返ります
 ///
 + (void)verifyIdChip:(enum IdDocumentType)document chipVerifyKey:(NSString * _Nonnull)chipVerifyKey on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdChipResult * _Nonnull))completion SWIFT_DEPRECATED;
-/// 書類ICカードファンクション
-/// \param document 本人確認書類種別
-///
-/// \param verificationMethod 身元確認方式
-///
-/// \param viewController 指定された viewController 上で画面が表示されます
-///
-/// \param completion ファンクションの処理結果が返ります
-///
-+ (void)verifyIdChip:(enum IdDocumentType)document :(enum VerificationMethod)verificationMethod on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdChipResult * _Nonnull))completion;
 /// 書類ICカードファンクション（署名検証のみ用）
 /// \param verificationMethod 身元確認方式
+///
+/// \param showReviewScreen 確認画面の表示有無<br />(true: 撮影写真の確認画面を表示する、false: 撮影写真の確認画面を表示しない)<br />・身元確認方式が在留カードまたは特別永住者証明書を指定した場合のみ有効です<br />・身元確認方式がそれ以外の場合はいずれの値も無視します
 ///
 /// \param signature 署名
 ///
@@ -2571,7 +3047,7 @@ SWIFT_CLASS("_TtC6Liquid10LiquidEkyc")
 ///
 /// \param completion ファンクションの処理結果が返ります
 ///
-+ (void)verifyIdChip:(enum VerificationMethod)verificationMethod signature:(NSString * _Nonnull)signature verifyingParams:(NSString * _Nonnull)verifyingParams rawData:(ICRawData * _Nonnull)rawData on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdChipResult * _Nonnull))completion;
++ (void)verifyIdChip:(enum VerificationMethod)verificationMethod showReviewScreen:(BOOL)showReviewScreen signature:(NSString * _Nonnull)signature verifyingParams:(NSString * _Nonnull)verifyingParams rawData:(ICRawData * _Nonnull)rawData on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdChipResult * _Nonnull))completion;
 /// 書類ICカードファンクション（署名検証のみ用(在留/特別永住 裏面なし)）
 /// \param verificationMethod 身元確認方式
 ///
@@ -2649,6 +3125,46 @@ SWIFT_CLASS("_TtC6Liquid10LiquidEkyc")
 @end
 
 
+@interface LiquidEkyc (SWIFT_EXTENSION(Liquid))
+/// ICカード読み取り可否ファンクション<br />
+/// ・初期化ファンクション実行前でも利用可能です
++ (enum IdChipAvailabilityStatus)checkIdChipAvailability SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
+@interface LiquidEkyc (SWIFT_EXTENSION(Liquid))
+/// 公的個人認証ファンクション（画面なし）（ワ対応用）
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     parameters: 公的個人認証ファンクション（画面なし）用設定値
+///   </li>
+///   <li>
+///     viewController: 指定された viewController 上で画面が表示されます
+///   </li>
+///   <li>
+///     completion: ファンクションの処理結果が返ります
+///   </li>
+/// </ul>
++ (void)identifyIdChipNonInteractiveWithParameters:(IdentifyIdChipNonInteractiveParameters * _Nonnull)parameters on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(IdentifyIdChipResult * _Nonnull))completion;
+@end
+
+@class VerifyIdChipNonInteractiveParameters;
+
+@interface LiquidEkyc (SWIFT_EXTENSION(Liquid))
+/// 書類ICカードファンクション（画面なし）
+/// \param verifyIdChipNonInteractiveParameters 書類ICカードファンクション（画面なし）用設定値
+///
+/// \param viewController 指定された viewController 上で画面が表示されます
+///
+/// \param completion ファンクションの処理結果が返ります
+///
++ (void)verifyIdChipNonInteractive:(VerifyIdChipNonInteractiveParameters * _Nonnull)parameters on:(UIViewController * _Nonnull)viewController completion:(void (^ _Nonnull)(VerifyIdChipResult * _Nonnull))completion;
+@end
+
+
 /// ライブネスチェック
 SWIFT_CLASS("_TtC6Liquid8Liveness")
 @interface Liveness : NSObject
@@ -2666,6 +3182,46 @@ SWIFT_CLASS("_TtC6Liquid8Liveness")
 @property (nonatomic, readonly, strong) UIImage * _Nonnull pattern6;
 /// 含まれる画像については『LIQUID eKYC Applicant SDK版インタフェース仕様書(SDK Interface Specifications)』をご確認ください
 @property (nonatomic, readonly, strong) UIImage * _Nonnull pattern7;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// 国外転出有無
+SWIFT_CLASS("_TtC6Liquid11MovedAbroad")
+@interface MovedAbroad : NSObject
+/// 不明（マイナンバーカードの国外転出継続利用対応以前のデータ）
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) MovedAbroad * _Nonnull unknown;)
++ (MovedAbroad * _Nonnull)unknown SWIFT_WARN_UNUSED_RESULT;
++ (void)setUnknown:(MovedAbroad * _Nonnull)value;
+/// 国外転出無し
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) MovedAbroad * _Nonnull no;)
++ (MovedAbroad * _Nonnull)no SWIFT_WARN_UNUSED_RESULT;
++ (void)setNo:(MovedAbroad * _Nonnull)value;
+/// 国外転出有り
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) MovedAbroad * _Nonnull yes;)
++ (MovedAbroad * _Nonnull)yes SWIFT_WARN_UNUSED_RESULT;
++ (void)setYes:(MovedAbroad * _Nonnull)value;
+///
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// パスワード・マイナンバーカード用
+SWIFT_CLASS("_TtC6Liquid20MyNumberCardPassword")
+@interface MyNumberCardPassword : NSObject <VerifyIdChipPassword>
+/// 照合番号B
+@property (nonatomic, readonly, copy) NSString * _Nonnull password;
+/// 生年の和暦西暦
+@property (nonatomic, readonly) enum BirthYearCalendarType birthYearCalendarType;
+/// コンストラクタ
+/// \param password 照合番号B
+///
+/// \param birthYearCalendarType 生年の和暦西暦
+///
+- (nonnull instancetype)initWithPassword:(NSString * _Nonnull)password birthYearCalendarType:(enum BirthYearCalendarType)birthYearCalendarType OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -2891,6 +3447,10 @@ typedef SWIFT_ENUM(NSInteger, ResultStatus, open) {
   ResultStatusTermsDoNotAgree = 21,
 /// 通信失敗 “communication_failure”
   ResultStatusCommunicationFailure = 22,
+/// ICチップでPIN間違い “chip_pin_invalid”
+  ResultStatusChipPinInvalid = 23,
+/// ICチップの読み取り失敗 “chip_read_error”
+  ResultStatusChipReadError = 24,
 };
 
 /// 性別
@@ -2985,7 +3545,6 @@ SWIFT_CLASS("_TtC6Liquid18TermsOfUseSettings")
 
 
 
-
 /// 身元確認方式
 typedef SWIFT_ENUM(NSInteger, VerificationMethod, open) {
 /// ヘ対応
@@ -3035,6 +3594,8 @@ SWIFT_CLASS("_TtC6Liquid20VerifyFaceParameters")
 /// 判定方式<br />
 /// (アクティブ判定【デフォルト値】、パッシブ判定）
 @property (nonatomic, readonly) enum FaceVerificationType faceVerificationType;
+/// Liquid指定 特殊用途事業者のみ設定
+@property (nonatomic, readonly, copy) NSString * _Nonnull controlCharacter;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -3049,6 +3610,8 @@ SWIFT_CLASS("_TtC6Liquid27VerifyFaceParametersBuilder")
 /// 判定方式<br />
 /// (アクティブ判定【デフォルト値】、パッシブ判定）
 - (VerifyFaceParametersBuilder * _Nonnull)setFaceVerificationType:(enum FaceVerificationType)verifyType;
+/// Liquid指定 特殊用途事業者のみ設定
+- (VerifyFaceParametersBuilder * _Nonnull)setControlCharacter:(NSString * _Nonnull)controlCharacter;
 ///
 - (VerifyFaceParameters * _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -3071,6 +3634,95 @@ SWIFT_CLASS("_TtC6Liquid16VerifyFaceResult")
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
+
+/// 書類ICカードファンクション（画面なし）用設定値
+/// <pre>
+/// 例: 運転免許証時
+/// let parameters = VerifyIdChipNonInteractiveParametersBuilder(password: DriverLicensePassword(暗証番号1, 暗証番号2))
+///     .build()
+///
+/// 例: マイナンバーカード時
+/// let parameters = VerifyIdChipNonInteractiveParametersBuilder(password: MyNumberCardPassword(照合番号B, 生年の和暦西暦))
+///     .build()
+/// </pre>
+SWIFT_CLASS("_TtC6Liquid36VerifyIdChipNonInteractiveParameters")
+@interface VerifyIdChipNonInteractiveParameters : NSObject
+/// パスワード<br />
+/// 運転免許証時: DriverLicensePassword<br/>
+/// マイナンバーカード時: MyNumberCardPassword
+@property (nonatomic, readonly, strong) id <VerifyIdChipPassword> _Nonnull password;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// 書類ICカードファンクション（画面なし）用設定値ビルダー
+SWIFT_CLASS("_TtC6Liquid43VerifyIdChipNonInteractiveParametersBuilder")
+@interface VerifyIdChipNonInteractiveParametersBuilder : NSObject
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     password: パスワード<br/>
+///     運転免許証時: DriverLicensePassword<br/>
+///     マイナンバーカード時: MyNumberCardPassword
+///   </li>
+/// </ul>
+- (nonnull instancetype)initWithPassword:(id <VerifyIdChipPassword> _Nonnull)password OBJC_DESIGNATED_INITIALIZER;
+///
+- (VerifyIdChipNonInteractiveParameters * _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// 書類ICカードファンクション用設定値
+/// <pre>
+/// 例:
+/// let parameters = VerifyIdChipParametersBuilder(document: 本人確認書類種別, verificationMethod: 身元確認方式)
+///     .setShowReviewScreen(確認画面の表示有無)
+///     .build()
+///  </pre>
+SWIFT_CLASS("_TtC6Liquid22VerifyIdChipParameters")
+@interface VerifyIdChipParameters : NSObject
+/// 本人確認書類種別
+@property (nonatomic, readonly) enum IdDocumentType document;
+/// 身元確認方式
+@property (nonatomic, readonly) enum VerificationMethod verificationMethod;
+/// 確認画面の表示有無<br />
+/// (true: 撮影写真の確認画面を表示する【デフォルト値】、false: 撮影写真の確認画面を表示しない)
+@property (nonatomic, readonly) BOOL showReviewScreen;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+/// 書類ICカードファンクション用設定値ビルダー
+SWIFT_CLASS("_TtC6Liquid29VerifyIdChipParametersBuilder")
+@interface VerifyIdChipParametersBuilder : NSObject
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     document: 本人確認書類種別
+///   </li>
+///   <li>
+///     verificationMethod: 身元確認方式
+///   </li>
+/// </ul>
+- (nonnull instancetype)initWithDocument:(enum IdDocumentType)document verificationMethod:(enum VerificationMethod)verificationMethod OBJC_DESIGNATED_INITIALIZER;
+/// 確認画面の表示有無<br />
+/// (true: 撮影写真の確認画面を表示する【デフォルト値】、false: 撮影写真の確認画面を表示しない)
+- (VerifyIdChipParametersBuilder * _Nonnull)setShowReviewScreen:(BOOL)showReviewScreen;
+///
+- (VerifyIdChipParameters * _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 
 
 /// 書類ICカードファンクションの結果
