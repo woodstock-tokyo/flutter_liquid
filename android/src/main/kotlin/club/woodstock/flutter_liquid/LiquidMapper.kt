@@ -53,7 +53,7 @@ fun LiquidChipData.toMap(): Map<String, Any?> {
         "expireDate" to expireDate,
         "myNumber" to myNumber,
         "zipCode" to zipCode,
-        "sex" to sex.name,
+        "sex" to sex?.name,
         "japaneseForeignerJudgment" to japaneseForeignerJudgment?.name,
         "residenceCardComprehensivePermission" to residenceCardComprehensivePermission,
         "residenceCardIndividualPermission" to residenceCardIndividualPermission,
