@@ -6,11 +6,11 @@
 	<dict>
 		<key>ios-arm64/ItrustEkycLibrary.framework/.DS_Store</key>
 		<data>
-		D13jkW7p1TJeIRPVLe8TtGd9U7w=
+		/TwGNxtgHDDo7GwS4d7+JRiqXqs=
 		</data>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Headers/ItrustEkycLibrary-Swift.h</key>
 		<data>
-		2FSZSZ5yjy2DkltHX19WJFIhkhk=
+		uYxeNW11NaQCLlqvNVL+CusHvdU=
 		</data>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Headers/ItrustEkycLibrary.h</key>
 		<data>
@@ -18,47 +18,51 @@
 		</data>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Info.plist</key>
 		<data>
-		dw4tLz1XZdTBHP2lxuvdr2n6D5M=
+		emB+685w/GeP7Uc5FoPEkSgCZyA=
 		</data>
 		<key>ios-arm64/ItrustEkycLibrary.framework/ItrustEkycLibrary</key>
 		<data>
-		Y43ayWGxDWypFBsK0qZB/nXbBIw=
+		/wnlUb5wn5mBDWhIsHHMAlOPBFw=
+		</data>
+		<key>ios-arm64/ItrustEkycLibrary.framework/Modules/.DS_Store</key>
+		<data>
+		3Zy0Gk3tXjN026lXn9QL6y4kDls=
 		</data>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<data>
-		nuq/HLmP8Uy31Snl2QDxVWVHtEQ=
+		AZmaP8TT1dUY2W5AC7u2MW/F0Yo=
 		</data>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		8b3SVpU9vjijswPPOjU02Kq0WZA=
+		FSPnLbho3G+LL9smI3XgVOqBIQ4=
 		</data>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		pQiq2exLqJa/l73m07KGqAb+1M0=
+		N0LjfuuhGWpNQtMvZiZJeF3qRFQ=
 		</data>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		HxzRjjRqjTOYwsgSwVOUyQC4wOA=
+		BTIbpScsKIYR7P9MpQGhbezxqdY=
 		</data>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		pQiq2exLqJa/l73m07KGqAb+1M0=
+		N0LjfuuhGWpNQtMvZiZJeF3qRFQ=
 		</data>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Modules/module.modulemap</key>
 		<data>
 		zMK5QeKK257BbNP8DmnXVXIdlhE=
 		</data>
+		<key>ios-arm64/ItrustEkycLibrary.framework/PrivacyInfo.xcprivacy</key>
+		<data>
+		varhoID5mdbsk3Yw+md5eGuLaJs=
+		</data>
 		<key>ios-arm64/ItrustEkycLibrary.framework/_CodeSignature/CodeResources</key>
 		<data>
-		ZEeVxkL/wdJhRTU5pDtAt98niHQ=
-		</data>
-		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/.DS_Store</key>
-		<data>
-		NEy1h/mQ1O9pb1z5CZdB2SCuySQ=
+		WbE4bBhLbVvXoO3Bn6dOHiAbroY=
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Headers/ItrustEkycLibrary-Swift.h</key>
 		<data>
-		jsnQwaTZNwKUJGtrsaIvMXtdGAg=
+		RwpmANp4GLx28ux3e0Wm7dzY3jk=
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Headers/ItrustEkycLibrary.h</key>
 		<data>
@@ -66,59 +70,63 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Info.plist</key>
 		<data>
-		P50egBevaYc0zu45UQPEHwR4B+M=
+		svygTRe+uOhMiGzEj/iGVfHcAGE=
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/ItrustEkycLibrary</key>
 		<data>
-		cAQrjoUm6R//nracv/YA7T4uWmo=
+		LQWRQU66EAKOYKIQyuu2ZGgyKOc=
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		KwGV1z2EpJL/NtrKilLKIaCg0qY=
+		E+Z6GXyhTCQsr5VrsmQlXNTKrCA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		ThwY8zU7Mzd3Nq/XiKkUSmjaeQY=
+		NewzXQH8eJe2VMoG1KK1Xc5E3ZY=
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		8b3SVpU9vjijswPPOjU02Kq0WZA=
+		FSPnLbho3G+LL9smI3XgVOqBIQ4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		R7ePub9/eY07NQr2+ttHuhXhdaY=
+		XDIL7rbBKX1Nm3GOB8f+u3QDcRA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		ne/VjcIpoAhhT+Y1N5QwSSYKJJA=
+		phDK1nUxgyWfgFD+gZO+Dt4SVko=
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		R7ePub9/eY07NQr2+ttHuhXhdaY=
+		XDIL7rbBKX1Nm3GOB8f+u3QDcRA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		8b3SVpU9vjijswPPOjU02Kq0WZA=
+		FSPnLbho3G+LL9smI3XgVOqBIQ4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		14Fxvzv/xIRp6NkSEAtwBQNTvlw=
+		PYzcELOZG2Dk6A8iyVglUK9g/ds=
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		EV0ZV9pI6tzQwxsz1lp2ukBXsYQ=
+		pLpPDlRYF+PS9bOgqYJBYEKln3I=
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		14Fxvzv/xIRp6NkSEAtwBQNTvlw=
+		PYzcELOZG2Dk6A8iyVglUK9g/ds=
 		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/module.modulemap</key>
 		<data>
 		zMK5QeKK257BbNP8DmnXVXIdlhE=
 		</data>
+		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/PrivacyInfo.xcprivacy</key>
+		<data>
+		varhoID5mdbsk3Yw+md5eGuLaJs=
+		</data>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/_CodeSignature/CodeResources</key>
 		<data>
-		AHkbDmw8VQ5wKbC+DxDBIf/ZpxY=
+		WNFZKGTGIxGBXFDdSg4FfiDNvNY=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -127,11 +135,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			2FSZSZ5yjy2DkltHX19WJFIhkhk=
+			uYxeNW11NaQCLlqvNVL+CusHvdU=
 			</data>
 			<key>hash2</key>
 			<data>
-			RWp/zfUrgNKW+bP8NZhdbudnnBKnR1XEXRm/QSWzxV4=
+			9X1B0f2I4Yin4ybb0tax7J7mB+Nm9qwI20GxyTBLeiU=
 			</data>
 		</dict>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Headers/ItrustEkycLibrary.h</key>
@@ -149,77 +157,77 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			dw4tLz1XZdTBHP2lxuvdr2n6D5M=
+			emB+685w/GeP7Uc5FoPEkSgCZyA=
 			</data>
 			<key>hash2</key>
 			<data>
-			wjy+lA8Wtj8ns7nxtaVppySoigOIO2QvRLfKpKB5t64=
+			QQeh+sHD+6CxoRG5Dqde1PL7restAUYlhY5OlBZFM5Q=
 			</data>
 		</dict>
 		<key>ios-arm64/ItrustEkycLibrary.framework/ItrustEkycLibrary</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Y43ayWGxDWypFBsK0qZB/nXbBIw=
+			/wnlUb5wn5mBDWhIsHHMAlOPBFw=
 			</data>
 			<key>hash2</key>
 			<data>
-			6pbLynLFrP6wEsquFwhS5kWMenWlY9NKIROMGgt2ce0=
+			O/JJ2sfdUxywfugHfPik5rHYxPQStc5xpVaYfgqPbgk=
 			</data>
 		</dict>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			nuq/HLmP8Uy31Snl2QDxVWVHtEQ=
+			AZmaP8TT1dUY2W5AC7u2MW/F0Yo=
 			</data>
 			<key>hash2</key>
 			<data>
-			AC+9uCtnYj2CULL2vLvzBuY2v1CEpaxwzopnqBy48ik=
+			ISDIMgu7Sq78d/lJ95GqOyWxtJicvgmPhUY76kau6ws=
 			</data>
 		</dict>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			8b3SVpU9vjijswPPOjU02Kq0WZA=
+			FSPnLbho3G+LL9smI3XgVOqBIQ4=
 			</data>
 			<key>hash2</key>
 			<data>
-			yrPocoGstCHo9r0sk3VmDR+FWQXmTpqhHwM1RVGFWEM=
+			KnRdWE4y6t4QM5zi5JDptPdHFgJy1Tku+7GLkZS2aNM=
 			</data>
 		</dict>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			pQiq2exLqJa/l73m07KGqAb+1M0=
+			N0LjfuuhGWpNQtMvZiZJeF3qRFQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			C8XSHya6QiuReIJpdITbgrU+PNguetqNCu9XGKhZjMU=
+			wbZ4PNTbh04V49sRD0mDwePFf4z6cTxcWkaZNuUzRto=
 			</data>
 		</dict>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			HxzRjjRqjTOYwsgSwVOUyQC4wOA=
+			BTIbpScsKIYR7P9MpQGhbezxqdY=
 			</data>
 			<key>hash2</key>
 			<data>
-			xHjMBAxuEY7mszqYzzdb2dfq523FR1rQX1EPoojS/gM=
+			qYGYFV+gDrAffTHRiS41xmRl+jENvZFx2nPewKajgHk=
 			</data>
 		</dict>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			pQiq2exLqJa/l73m07KGqAb+1M0=
+			N0LjfuuhGWpNQtMvZiZJeF3qRFQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			C8XSHya6QiuReIJpdITbgrU+PNguetqNCu9XGKhZjMU=
+			wbZ4PNTbh04V49sRD0mDwePFf4z6cTxcWkaZNuUzRto=
 			</data>
 		</dict>
 		<key>ios-arm64/ItrustEkycLibrary.framework/Modules/module.modulemap</key>
@@ -233,26 +241,37 @@
 			Abc/mBF7jFRfdp+zD5ktYBE0v2I6/8TWJnc6V9e1DBk=
 			</data>
 		</dict>
+		<key>ios-arm64/ItrustEkycLibrary.framework/PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			varhoID5mdbsk3Yw+md5eGuLaJs=
+			</data>
+			<key>hash2</key>
+			<data>
+			6nM3zb1vtfzxy5TuFmsrjPyp9cb2mRr6TCtBL7Qu5mQ=
+			</data>
+		</dict>
 		<key>ios-arm64/ItrustEkycLibrary.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ZEeVxkL/wdJhRTU5pDtAt98niHQ=
+			WbE4bBhLbVvXoO3Bn6dOHiAbroY=
 			</data>
 			<key>hash2</key>
 			<data>
-			O2x8SlHFb6NxAjc9ZOAxCFeqQIzUHM1HeKZ2pderQCg=
+			EMyCrii2tpo4YwV5f8a7pgu1AQU7r3kZHAJ9VQ2b6Ps=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Headers/ItrustEkycLibrary-Swift.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			jsnQwaTZNwKUJGtrsaIvMXtdGAg=
+			RwpmANp4GLx28ux3e0Wm7dzY3jk=
 			</data>
 			<key>hash2</key>
 			<data>
-			l6+n4UKvsAlnvAqTPtwkXVciUgVNWntjclcATMQW/IY=
+			Wm0yF6aM8tbPCbN+cZKWAubPqJheosY60GvLCPwYJsk=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Headers/ItrustEkycLibrary.h</key>
@@ -270,132 +289,132 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			P50egBevaYc0zu45UQPEHwR4B+M=
+			svygTRe+uOhMiGzEj/iGVfHcAGE=
 			</data>
 			<key>hash2</key>
 			<data>
-			fxHmCWUaB16ir+TzDSfOIDpqbHqmeP5xhxlSryrdvMw=
+			v5/Pi2HjhiijYf5+tLQlY3EoxCHQdRR83V21nsotCso=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/ItrustEkycLibrary</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			cAQrjoUm6R//nracv/YA7T4uWmo=
+			LQWRQU66EAKOYKIQyuu2ZGgyKOc=
 			</data>
 			<key>hash2</key>
 			<data>
-			x0IO67Wea4Rrr+zzSmX3BgNFff4vUtGCo2sjDmV/DM0=
+			G0bPBNo1rwJ8bX/U8pVL4ymG610TaVYnbnuXOtrBzfQ=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KwGV1z2EpJL/NtrKilLKIaCg0qY=
+			E+Z6GXyhTCQsr5VrsmQlXNTKrCA=
 			</data>
 			<key>hash2</key>
 			<data>
-			mfxlvgu3ClpN6PkDr9aIxbc/lMPdUanEIzrebmEh/lk=
+			lM/tOaWyS3i5H/45OyRy7PF1qzTvzYjgoTX93YmePcw=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ThwY8zU7Mzd3Nq/XiKkUSmjaeQY=
+			NewzXQH8eJe2VMoG1KK1Xc5E3ZY=
 			</data>
 			<key>hash2</key>
 			<data>
-			3szYXq18fbjbfGaGQpzxgkmKNELSbgKI1wUDhNqsrQA=
+			CSiVNJvbP6ImbIQPG7hPot0oIXQLslOCx+ki6OIVbSU=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			8b3SVpU9vjijswPPOjU02Kq0WZA=
+			FSPnLbho3G+LL9smI3XgVOqBIQ4=
 			</data>
 			<key>hash2</key>
 			<data>
-			yrPocoGstCHo9r0sk3VmDR+FWQXmTpqhHwM1RVGFWEM=
+			KnRdWE4y6t4QM5zi5JDptPdHFgJy1Tku+7GLkZS2aNM=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			R7ePub9/eY07NQr2+ttHuhXhdaY=
+			XDIL7rbBKX1Nm3GOB8f+u3QDcRA=
 			</data>
 			<key>hash2</key>
 			<data>
-			m/L0LHiY7qV/wx0wkDnNJXKJ6LOfOtBccBJQKWUxve4=
+			hG8X75Oxq5Bobh2clOvAjjEwLIUmQw17FxbrZ7oft+0=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ne/VjcIpoAhhT+Y1N5QwSSYKJJA=
+			phDK1nUxgyWfgFD+gZO+Dt4SVko=
 			</data>
 			<key>hash2</key>
 			<data>
-			M9eHcjC0P7Q5JKMVS2joLplKDjZJ8VURg805voZXXNo=
+			Hbt44r46DV2uOxhVd9vVQjpM4p23DA0HXfuM8ehzqPE=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			R7ePub9/eY07NQr2+ttHuhXhdaY=
+			XDIL7rbBKX1Nm3GOB8f+u3QDcRA=
 			</data>
 			<key>hash2</key>
 			<data>
-			m/L0LHiY7qV/wx0wkDnNJXKJ6LOfOtBccBJQKWUxve4=
+			hG8X75Oxq5Bobh2clOvAjjEwLIUmQw17FxbrZ7oft+0=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			8b3SVpU9vjijswPPOjU02Kq0WZA=
+			FSPnLbho3G+LL9smI3XgVOqBIQ4=
 			</data>
 			<key>hash2</key>
 			<data>
-			yrPocoGstCHo9r0sk3VmDR+FWQXmTpqhHwM1RVGFWEM=
+			KnRdWE4y6t4QM5zi5JDptPdHFgJy1Tku+7GLkZS2aNM=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			14Fxvzv/xIRp6NkSEAtwBQNTvlw=
+			PYzcELOZG2Dk6A8iyVglUK9g/ds=
 			</data>
 			<key>hash2</key>
 			<data>
-			XSskcuhaXe+uqL6JfF59Hrrs3+KhzKU6Via0WixO7Lo=
+			T87FeiGTrDB5cG51Irnc4HRMli1b49YBt0MKoND2fUE=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			EV0ZV9pI6tzQwxsz1lp2ukBXsYQ=
+			pLpPDlRYF+PS9bOgqYJBYEKln3I=
 			</data>
 			<key>hash2</key>
 			<data>
-			kuV9aeXS1RRRSQjaQrVesqpIxlJZRqJzmDcaj2JKpl8=
+			qTyECsX859MhLxeJ/C8nk9vcMc1WiEAnQpPPT+8Iwqs=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/ItrustEkycLibrary.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			14Fxvzv/xIRp6NkSEAtwBQNTvlw=
+			PYzcELOZG2Dk6A8iyVglUK9g/ds=
 			</data>
 			<key>hash2</key>
 			<data>
-			XSskcuhaXe+uqL6JfF59Hrrs3+KhzKU6Via0WixO7Lo=
+			T87FeiGTrDB5cG51Irnc4HRMli1b49YBt0MKoND2fUE=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/Modules/module.modulemap</key>
@@ -409,15 +428,26 @@
 			Abc/mBF7jFRfdp+zD5ktYBE0v2I6/8TWJnc6V9e1DBk=
 			</data>
 		</dict>
+		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			varhoID5mdbsk3Yw+md5eGuLaJs=
+			</data>
+			<key>hash2</key>
+			<data>
+			6nM3zb1vtfzxy5TuFmsrjPyp9cb2mRr6TCtBL7Qu5mQ=
+			</data>
+		</dict>
 		<key>ios-arm64_x86_64-simulator/ItrustEkycLibrary.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			AHkbDmw8VQ5wKbC+DxDBIf/ZpxY=
+			WNFZKGTGIxGBXFDdSg4FfiDNvNY=
 			</data>
 			<key>hash2</key>
 			<data>
-			EmKmOaLLQk+FJb05JtuYco8Lr/KCMtbuLpDthEr/JX0=
+			CUkoBU4NTZG4KxXd59Av5xErkU01s+4gRtyAtEnGTcU=
 			</data>
 		</dict>
 	</dict>

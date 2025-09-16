@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
+// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
 // swift-module-flags: -target arm64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ItrustEkycLibrary
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 import CommonCrypto
@@ -51,6 +51,31 @@ public class ResidenceCardCommonData {
   public func getCardType() -> Swift.Int
   @objc deinit
 }
+public enum SignatureDataAndBasicPersonalInfoAndMynaDriverLicenseError : Swift.Error {
+  case notNfcTagReadAvailable(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case notSetPin(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case notSetTbsData(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case notSupportedHashAlgorithm(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failBase64Decode(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case invalidPinLength(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case invalidPinCharacter(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case inputPinDialogCanceled(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failVerifyLockNow(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failVerifyRetry(errorCode: Swift.Int, localizedDescription: Swift.String, retryCount: Swift.Int)
+  case failVerifyLocked(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case cardConnectionLost(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case cardConnectionTimeout(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case cardConnectionUserCancel(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failVerifyPin(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case cardConnectionFailed(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case notSetAppId(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failHttpsCommunicationStatusCode(errorCode: Swift.Int, localizedDescription: Swift.String, httpStatus: Swift.Int)
+  case failHttpsCommunicationTimeout(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failHttpsCommunication(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failReadBasicPersonalInfo(errorCode: Swift.Int, localizedDescription: Swift.String, intErrFlag: Swift.Int)
+  case failVerifySignature(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case unknown(errorCode: Swift.Int, localizedDescription: Swift.String)
+}
 @_hasMissingDesignatedInitializers @available(iOS 13.0, *)
 public class SignatureDataAndBasicPersonalInfoAndPromptedPii {
   public func getSignatureData() -> ItrustEkycLibrary.SignatureData?
@@ -87,6 +112,8 @@ public class LicenseChangedRegisteredDomicile {
   public func isChanged() -> Swift.Bool?
   public func getChangedRegisteredDomiciles() -> [Swift.String]?
   public func getChangedRegisteredDomicileLatest() -> Swift.String?
+  public func getRegisteredDomicileChangedEntryList() -> [ItrustEkycLibrary.ChangedEntry]?
+  public func getRegisteredDomicileChangedEntryLatest() -> ItrustEkycLibrary.ChangedEntry?
   public func indexesOfExternalCharInRegisteredDomicile(index: Swift.Int) -> [Swift.Int]?
   public func getExternalCharInRegisteredDomicile(registeredDomicileIndex: Swift.Int, externalCharIndex: Swift.Int) -> ItrustEkycLibrary.LicenseExternalCharacter?
   @objc deinit
@@ -138,6 +165,34 @@ public class LicenseEntries {
   public func getExternalCharInPreviousName(index: Swift.Int) -> ItrustEkycLibrary.LicenseExternalCharacter?
   @objc deinit
 }
+@_hasMissingDesignatedInitializers @available(iOS 13.0, *)
+public class MynaDriverLicense {
+  public func getHistoryRecordDate() -> Swift.String?
+  public func getDriverClass() -> Swift.String?
+  public func getColorClass() -> Swift.String?
+  public func getExpireData() -> Swift.String?
+  public func getConditionList() -> [Swift.String?]?
+  public func getOmittedCharacterList() -> [Foundation.Data?]?
+  public func getRemarkList() -> [Swift.String?]?
+  public func getSpareList() -> [Swift.String?]?
+  public func getLicenseRecordNumber() -> Swift.String?
+  public func getHistoryRecordNumber() -> Swift.String?
+  public func getLicenseObtainedDateList() -> [Swift.String?]?
+  public func getLicenseCategoryList() -> [Foundation.Data?]?
+  public func getEntriesRFUList() -> [Foundation.Data?]?
+  public func getPhoto() -> Foundation.Data?
+  public func getSignatureBinary() -> Foundation.Data?
+  public func getSerial() -> Swift.String?
+  public func getRFU() -> Foundation.Data?
+  public func getIssuer() -> Swift.String?
+  public func getSubject() -> Swift.String?
+  public func getSubjectKeyIdentifier() -> Foundation.Data?
+  public func getRawData() -> Swift.String?
+  public func getHashData() -> Swift.String?
+  public func getVerifyingParams() -> Swift.String?
+  public func getSignature() -> Swift.String?
+  @objc deinit
+}
 public enum SignatureDataAndBasicPersonalInfoError : Swift.Error {
   case notNfcTagReadAvailable(errorCode: Swift.Int, localizedDescription: Swift.String)
   case notSetPin(errorCode: Swift.Int, localizedDescription: Swift.String)
@@ -164,6 +219,8 @@ public class SignatureData {
   public func getSigningCert() -> Swift.String?
   public func getExpectedHash() -> Swift.String?
   public func getHashAlgOid() -> Swift.String?
+  public func getFourInfoConsentApply() -> Swift.String?
+  public func getFourInfoConsentRevokeApply() -> Swift.String?
   @objc deinit
 }
 @_hasMissingDesignatedInitializers @available(iOS 13.0, *)
@@ -194,6 +251,12 @@ public class SignatureDataAndBasicPersonalInfoAndMyNumberInfo {
   public func getSignatureData() -> ItrustEkycLibrary.SignatureData?
   public func getBasicPersonalInfo() -> ItrustEkycLibrary.BasicPersonalInfo?
   public func getMyNumberInfo() -> ItrustEkycLibrary.MyNumberInfo?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @available(iOS 13.0, *)
+public class CardPrintInfoAndMynaDriverLicense {
+  public func getCardPrintInfo() -> ItrustEkycLibrary.CardPrintInfo?
+  public func getMynaDriverLicense() -> ItrustEkycLibrary.MynaDriverLicense?
   @objc deinit
 }
 @_hasMissingDesignatedInitializers @available(iOS 13.0, *)
@@ -242,6 +305,13 @@ public enum CardPrintInfoAndMyNumberInfoError : Swift.Error {
   case failVerifySignature(errorCode: Swift.Int, localizedDescription: Swift.String)
   case unknown(errorCode: Swift.Int, localizedDescription: Swift.String)
 }
+@_hasMissingDesignatedInitializers @available(iOS 13.0, *)
+public class SignatureDataAndBasicPersonalInfoAndMynaDriverLicense {
+  public func getSignatureData() -> ItrustEkycLibrary.SignatureData?
+  public func getBasicPersonalInfo() -> ItrustEkycLibrary.BasicPersonalInfo?
+  public func getMynaDriverLicense() -> ItrustEkycLibrary.MynaDriverLicense?
+  @objc deinit
+}
 public enum SetPinKey {
   case MYNUMBERCARD_CARDPRINTINFO_PIN
   case MYNUMBERCARD_MYNUMBER_PIN
@@ -251,6 +321,7 @@ public enum SetPinKey {
   case MYNUMBERCARD_PROMPTED_PII_PIN
   case DRIVERLICENSE_PIN1
   case DRIVERLICENSE_PIN2
+  case MYNA_DRIVERLICENSE_PIN
   public static func == (a: ItrustEkycLibrary.SetPinKey, b: ItrustEkycLibrary.SetPinKey) -> Swift.Bool
   public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
@@ -291,6 +362,14 @@ public struct NFCDialogMessageSettingGroup {
   public init(nfcAlertInitialMessage: Swift.String = "カードを接触させてください。", nfcAlertReadMessage: Swift.String = "カード読み込み中...", nfcAlertSuccesMessage: Swift.String = "カードの読み込みに成功しました。", nfcAlertErrorMessage: Swift.String = "カードの読み込みに失敗しました。")
 }
 @_hasMissingDesignatedInitializers @available(iOS 13.0, *)
+public class ChangedEntry {
+  public func getJisYear() -> Swift.String?
+  public func getChangeDate() -> Swift.String?
+  public func getValue() -> Swift.String?
+  public func getPscName() -> Swift.String?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @available(iOS 13.0, *)
 public class LicenseExternalCharacters {
   public func isChanged() -> Swift.Bool?
   public func getExternalCharacter(key: Swift.String) -> ItrustEkycLibrary.LicenseExternalCharacter?
@@ -303,6 +382,14 @@ public protocol SignatureDataGeneratorDelegate {
 @available(iOS 13.0, *)
 public protocol AuthSignatureDataGeneratorDelegate {
   func didAuth(result: Swift.Result<ItrustEkycLibrary.SignatureData, ItrustEkycLibrary.SignatureDataError>)
+}
+@available(iOS 13.0, *)
+public protocol FourInfoConsentApplySignatureDataGeneratorDelegate {
+  func didSignFourInfoConsentApply(result: Swift.Result<ItrustEkycLibrary.SignatureData, ItrustEkycLibrary.SignatureDataError>)
+}
+@available(iOS 13.0, *)
+public protocol FourInfoConsentRevokeApplySignatureDataGeneratorDelegate {
+  func didSignFourInfoConsentRevokeApply(result: Swift.Result<ItrustEkycLibrary.SignatureData, ItrustEkycLibrary.SignatureDataError>)
 }
 @available(iOS 13.0, *)
 public protocol BasicPersonalInfoReaderDelegate {
@@ -351,6 +438,18 @@ public protocol SignatureDataAndBasicPersonalInfoAndMyNumberInfoReaderDelegate {
 @available(iOS 13.0, *)
 public protocol SignatureDataAndBasicPersonalInfoAndPromptedPiiReaderDelegate {
   func didSignAndGetBasicPersonalInfoAndGetPromptedPii(result: Swift.Result<ItrustEkycLibrary.SignatureDataAndBasicPersonalInfoAndPromptedPii, ItrustEkycLibrary.SignatureDataAndBasicPersonalInfoAndPromptedPiiError>)
+}
+@available(iOS 13.0, *)
+public protocol MynaDriverLicenseReaderDelegate {
+  func didGetMynaDriverLicense(result: Swift.Result<ItrustEkycLibrary.MynaDriverLicense, ItrustEkycLibrary.MynaDriverLicenseError>)
+}
+@available(iOS 13.0, *)
+public protocol CardPrintInfoAndMynaDriverLicenseReaderDelegate {
+  func didGetCardPrintInfoAndGetMynaDriverLicense(result: Swift.Result<ItrustEkycLibrary.CardPrintInfoAndMynaDriverLicense, ItrustEkycLibrary.CardPrintInfoAndMynaDriverLicenseError>)
+}
+@available(iOS 13.0, *)
+public protocol SignatureDataAndBasicPersonalInfoAndMynaDriverLicenseReaderDelegate {
+  func didSignAndGetBasicPersonalInfoAndGetMynaDriverLicense(result: Swift.Result<ItrustEkycLibrary.SignatureDataAndBasicPersonalInfoAndMynaDriverLicense, ItrustEkycLibrary.SignatureDataAndBasicPersonalInfoAndMynaDriverLicenseError>)
 }
 public enum CardTypeInfoError : Swift.Error {
   case notNfcTagReadAvailable(errorCode: Swift.Int, localizedDescription: Swift.String)
@@ -422,6 +521,10 @@ public class Identify : ObjectiveC.NSObject {
   @available(iOS 13.0, *)
   public func auth(delegate: any ItrustEkycLibrary.AuthSignatureDataGeneratorDelegate, tbsData: Swift.String, hashAlgorithm: Swift.String?, inputPinDialogDisplaySettingGroup: ItrustEkycLibrary.InputPinDialogDisplaySettingGroup = InputPinDialogDisplaySettingGroup(), nfcDialogMessageSettingGroup: ItrustEkycLibrary.NFCDialogMessageSettingGroup = NFCDialogMessageSettingGroup())
   @available(iOS 13.0, *)
+  public func signFourInfoConsentApply(delegate: any ItrustEkycLibrary.FourInfoConsentApplySignatureDataGeneratorDelegate, serviceId: Swift.String, serviceProviderId: Swift.String, name: Swift.Bool, gender: Swift.Bool, address: Swift.Bool, dateOfBirth: Swift.Bool, inputPinDialogDisplaySettingGroup: ItrustEkycLibrary.InputPinDialogDisplaySettingGroup = InputPinDialogDisplaySettingGroup(), nfcDialogMessageSettingGroup: ItrustEkycLibrary.NFCDialogMessageSettingGroup = NFCDialogMessageSettingGroup())
+  @available(iOS 13.0, *)
+  public func signFourInfoConsentRevokeApply(delegate: any ItrustEkycLibrary.FourInfoConsentRevokeApplySignatureDataGeneratorDelegate, serviceId: Swift.String, serviceProviderId: Swift.String, inputPinDialogDisplaySettingGroup: ItrustEkycLibrary.InputPinDialogDisplaySettingGroup = InputPinDialogDisplaySettingGroup(), nfcDialogMessageSettingGroup: ItrustEkycLibrary.NFCDialogMessageSettingGroup = NFCDialogMessageSettingGroup())
+  @available(iOS 13.0, *)
   public func signAndGetMyNumber(delegate: any ItrustEkycLibrary.SignatureDataAndMyNumberInfoReaderDelegate, tbsData: Swift.String, hashAlgorithm: Swift.String?, inputPinDialogDisplaySettingGroup: ItrustEkycLibrary.InputPinDialogDisplaySettingGroup = InputPinDialogDisplaySettingGroup(), nfcDialogMessageSettingGroup: ItrustEkycLibrary.NFCDialogMessageSettingGroup = NFCDialogMessageSettingGroup(), passCode: Swift.String)
   @available(iOS 13.0, *)
   public func signAndGetMyNumber(delegate: any ItrustEkycLibrary.SignatureDataAndMyNumberInfoReaderDelegate, appId: Swift.String, tbsData: Swift.String, hashAlgorithm: Swift.String?, inputPinDialogDisplaySettingGroup: ItrustEkycLibrary.InputPinDialogDisplaySettingGroup = InputPinDialogDisplaySettingGroup(), nfcDialogMessageSettingGroup: ItrustEkycLibrary.NFCDialogMessageSettingGroup = NFCDialogMessageSettingGroup(), passCode: Swift.String)
@@ -450,6 +553,18 @@ public class Identify : ObjectiveC.NSObject {
   @available(iOS 13.0, *)
   public func signAndGetBasicPersonalInfoAndGetPromptedPii(delegate: any ItrustEkycLibrary.SignatureDataAndBasicPersonalInfoAndPromptedPiiReaderDelegate, appId: Swift.String, tbsData: Swift.String, hashAlgorithm: Swift.String?, includeBasicPersonalInfo: Swift.Bool, inputPinDialogDisplaySettingGroup: ItrustEkycLibrary.InputPinDialogDisplaySettingGroup = InputPinDialogDisplaySettingGroup(), nfcDialogMessageSettingGroup: ItrustEkycLibrary.NFCDialogMessageSettingGroup = NFCDialogMessageSettingGroup(), passCode: Swift.String)
   @available(iOS 13.0, *)
+  public func getMynaDriverLicense(delegate: any ItrustEkycLibrary.MynaDriverLicenseReaderDelegate, inputPinDialogDisplaySettingGroup: ItrustEkycLibrary.InputPinDialogDisplaySettingGroup = InputPinDialogDisplaySettingGroup(), nfcDialogMessageSettingGroup: ItrustEkycLibrary.NFCDialogMessageSettingGroup = NFCDialogMessageSettingGroup())
+  @available(iOS 13.0, *)
+  public func getMynaDriverLicense(delegate: any ItrustEkycLibrary.MynaDriverLicenseReaderDelegate, appId: Swift.String, inputPinDialogDisplaySettingGroup: ItrustEkycLibrary.InputPinDialogDisplaySettingGroup = InputPinDialogDisplaySettingGroup(), nfcDialogMessageSettingGroup: ItrustEkycLibrary.NFCDialogMessageSettingGroup = NFCDialogMessageSettingGroup())
+  @available(iOS 13.0, *)
+  public func getCardPrintInfoAndGetMynaDriverLicense(delegate: any ItrustEkycLibrary.CardPrintInfoAndMynaDriverLicenseReaderDelegate, inputPinDialogDisplaySettingGroup: ItrustEkycLibrary.InputPinDialogDisplaySettingGroup = InputPinDialogDisplaySettingGroup(), nfcDialogMessageSettingGroup: ItrustEkycLibrary.NFCDialogMessageSettingGroup = NFCDialogMessageSettingGroup())
+  @available(iOS 13.0, *)
+  public func getCardPrintInfoAndGetMynaDriverLicense(delegate: any ItrustEkycLibrary.CardPrintInfoAndMynaDriverLicenseReaderDelegate, appId: Swift.String, inputPinDialogDisplaySettingGroup: ItrustEkycLibrary.InputPinDialogDisplaySettingGroup = InputPinDialogDisplaySettingGroup(), nfcDialogMessageSettingGroup: ItrustEkycLibrary.NFCDialogMessageSettingGroup = NFCDialogMessageSettingGroup())
+  @available(iOS 13.0, *)
+  public func signAndGetBasicPersonalInfoAndGetMynaDriverLicense(delegate: any ItrustEkycLibrary.SignatureDataAndBasicPersonalInfoAndMynaDriverLicenseReaderDelegate, tbsData: Swift.String, hashAlgorithm: Swift.String?, includeBasicPersonalInfo: Swift.Bool, inputPinDialogDisplaySettingGroup: ItrustEkycLibrary.InputPinDialogDisplaySettingGroup = InputPinDialogDisplaySettingGroup(), nfcDialogMessageSettingGroup: ItrustEkycLibrary.NFCDialogMessageSettingGroup = NFCDialogMessageSettingGroup())
+  @available(iOS 13.0, *)
+  public func signAndGetBasicPersonalInfoAndGetMynaDriverLicense(delegate: any ItrustEkycLibrary.SignatureDataAndBasicPersonalInfoAndMynaDriverLicenseReaderDelegate, appId: Swift.String, tbsData: Swift.String, hashAlgorithm: Swift.String?, includeBasicPersonalInfo: Swift.Bool, inputPinDialogDisplaySettingGroup: ItrustEkycLibrary.InputPinDialogDisplaySettingGroup = InputPinDialogDisplaySettingGroup(), nfcDialogMessageSettingGroup: ItrustEkycLibrary.NFCDialogMessageSettingGroup = NFCDialogMessageSettingGroup())
+  @available(iOS 13.0, *)
   public func getDriverLicense(delegate: any ItrustEkycLibrary.DriverLicenseInfoReaderDelegate, inputPinDialogDisplaySettingGroup: ItrustEkycLibrary.InputPinDialogDisplaySettingGroup = InputPinDialogDisplaySettingGroup(), nfcDialogMessageSettingGroup: ItrustEkycLibrary.NFCDialogMessageSettingGroup = NFCDialogMessageSettingGroup())
   @available(iOS 13.0, *)
   public func getDriverLicense(delegate: any ItrustEkycLibrary.DriverLicenseInfoReaderDelegate, appId: Swift.String, inputPinDialogDisplaySettingGroup: ItrustEkycLibrary.InputPinDialogDisplaySettingGroup = InputPinDialogDisplaySettingGroup(), nfcDialogMessageSettingGroup: ItrustEkycLibrary.NFCDialogMessageSettingGroup = NFCDialogMessageSettingGroup())
@@ -460,6 +575,7 @@ public class Identify : ObjectiveC.NSObject {
   public func setPin(target: ItrustEkycLibrary.SetPinKey, pin: Swift.String) -> Swift.Int
   public func clearPin()
   public func deletePin(target: ItrustEkycLibrary.SetPinKey) -> Swift.Int
+  public func getFailedPin() -> [ItrustEkycLibrary.SetPinKey : Swift.Int?]?
   @objc deinit
 }
 public enum MyNumberInfoError : Swift.Error {
@@ -589,6 +705,47 @@ public class LicenseSignature {
   public func getSubjectKeyIdentifier() -> Foundation.Data?
   @objc deinit
 }
+public enum CardPrintInfoAndMynaDriverLicenseError : Swift.Error {
+  case notNfcTagReadAvailable(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case notSetPin(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case invalidPinLength(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case invalidPinCharacter(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case inputPinDialogCanceled(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failVerifyLockNow(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failVerifyRetry(errorCode: Swift.Int, localizedDescription: Swift.String, retryCount: Swift.Int)
+  case failVerifyLocked(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case cardConnectionLost(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case cardConnectionTimeout(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case cardConnectionUserCancel(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case cardConnectionFailed(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case notSetAppId(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failHttpsCommunicationStatusCode(errorCode: Swift.Int, localizedDescription: Swift.String, httpStatus: Swift.Int)
+  case failHttpsCommunicationTimeout(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failHttpsCommunication(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failVerifySignature(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case unknown(errorCode: Swift.Int, localizedDescription: Swift.String)
+}
+public enum MynaDriverLicenseError : Swift.Error {
+  case notNfcTagReadAvailable(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case notSetPin(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case invalidPinLength(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case invalidPinCharacter(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case inputPinDialogCanceled(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failVerifyLockNow(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failVerifyRetry(errorCode: Swift.Int, localizedDescription: Swift.String, retryCount: Swift.Int)
+  case failVerifyLocked(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case cardConnectionLost(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case cardConnectionTimeout(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case cardConnectionUserCancel(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failVerifyPin(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case cardConnectionFailed(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case notSetAppId(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failHttpsCommunicationStatusCode(errorCode: Swift.Int, localizedDescription: Swift.String, httpStatus: Swift.Int)
+  case failHttpsCommunicationTimeout(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failHttpsCommunication(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case failVerifySignature(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case unknown(errorCode: Swift.Int, localizedDescription: Swift.String)
+}
 @_hasMissingDesignatedInitializers @available(iOS 13.0, *)
 public class LicenseChangedEntries {
   public func isChanged() -> Swift.Bool?
@@ -596,16 +753,28 @@ public class LicenseChangedEntries {
   public func getChangeDateLatest() -> Swift.String?
   public func getPscNames() -> [Swift.String]?
   public func getPscNamesLatest() -> Swift.String?
+  public func getPscNameChangedEntryList() -> [ItrustEkycLibrary.ChangedEntry]?
+  public func getPscNameChangedEntryLatest() -> ItrustEkycLibrary.ChangedEntry?
   public func getCommonNames() -> [Swift.String]?
   public func getCommonNamesLatest() -> Swift.String?
+  public func getCommonNameChangedEntryList() -> [ItrustEkycLibrary.ChangedEntry]?
+  public func getCommonNameChangedEntryLatest() -> ItrustEkycLibrary.ChangedEntry?
   public func getCallNames() -> [Swift.String]?
   public func getCallNamesLatest() -> Swift.String?
+  public func getCallNameChangedEntryList() -> [ItrustEkycLibrary.ChangedEntry]?
+  public func getCallNameChangedEntryLatest() -> ItrustEkycLibrary.ChangedEntry?
   public func getAddresses() -> [Swift.String]?
   public func getAddressesLatest() -> Swift.String?
+  public func getAddressChangedEntryList() -> [ItrustEkycLibrary.ChangedEntry]?
+  public func getAddressChangedEntryLatest() -> ItrustEkycLibrary.ChangedEntry?
   public func getConditions() -> [Swift.String]?
+  public func getConditionChangedEntryList() -> [ItrustEkycLibrary.ChangedEntry]?
   public func getCancelConditions() -> [Swift.String]?
+  public func getCancelConditionChangedEntryList() -> [ItrustEkycLibrary.ChangedEntry]?
   public func getRemarks() -> [Swift.String]?
+  public func getRemarkChangedEntryList() -> [ItrustEkycLibrary.ChangedEntry]?
   public func getSpares() -> [Swift.String]?
+  public func getSpareChangedEntryList() -> [ItrustEkycLibrary.ChangedEntry]?
   public func indexesOfExternalCharInCommonName(index: Swift.Int) -> [Swift.Int]?
   public func getExternalCharInCommonName(commonNamesIndex: Swift.Int, externalCharIndex: Swift.Int) -> ItrustEkycLibrary.LicenseExternalCharacter?
   public func indexesOfExternalCharInCondition(index: Swift.Int) -> [Swift.Int]?
@@ -660,6 +829,8 @@ public enum SignatureDataError : Swift.Error {
   case failBase64Decode(errorCode: Swift.Int, localizedDescription: Swift.String)
   case invalidPinLength(errorCode: Swift.Int, localizedDescription: Swift.String)
   case invalidPinCharacter(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case notSetServiceId(errorCode: Swift.Int, localizedDescription: Swift.String)
+  case notSetServiceProviderId(errorCode: Swift.Int, localizedDescription: Swift.String)
   case inputPinDialogCanceled(errorCode: Swift.Int, localizedDescription: Swift.String)
   case failVerifyLockNow(errorCode: Swift.Int, localizedDescription: Swift.String)
   case failVerifyRetry(errorCode: Swift.Int, localizedDescription: Swift.String, retryCount: Swift.Int)
@@ -766,6 +937,7 @@ public class BasicPersonalInfo {
   public func getPreviousName() -> Swift.String?
   public func getAddress() -> Swift.String?
   public func getDateOfBirth() -> Swift.String?
+  public func getYearNumber() -> Swift.String?
   public func getGender() -> Swift.String?
   public func getSubCharOfAllName() -> Swift.String?
   public func getSubCharOfCommonName() -> Swift.String?
