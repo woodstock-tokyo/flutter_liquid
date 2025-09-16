@@ -3,16 +3,16 @@ framework module Liquid {
   export *
 
   module * { export * }
+  
+  // Resolve references to LiquidGraphicsAuthor
+  module LiquidGraphicsAuthor [extern_c] {
+    umbrella header "LiquidGraphicsAuthor-umbrella.h"
+    export *
+    module * { export * }
+  }
 }
 
 module Liquid.Swift {
   header "Liquid-Swift.h"
   requires objc
-}
-
-// Resolve references to LiquidGraphicsAuthor
-framework module LiquidGraphicsAuthor [extern_c]{
-    umbrella header "LiquidGraphicsAuthor-umbrella.h"
-    export *
-    module * { export * }
 }
