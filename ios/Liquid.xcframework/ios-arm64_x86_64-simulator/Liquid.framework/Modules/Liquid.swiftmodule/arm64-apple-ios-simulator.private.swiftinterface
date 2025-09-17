@@ -23,7 +23,7 @@ import DeveloperToolsSupport
 import Foundation
 import ItrustEkycLibrary
 @_exported import Liquid
-import LiquidGraphicsAuthor
+// import LiquidGraphicsAuthor
 import MobileCoreServices
 import Security
 import Swift

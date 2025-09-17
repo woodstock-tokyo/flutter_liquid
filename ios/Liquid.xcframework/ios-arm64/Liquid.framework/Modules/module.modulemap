@@ -3,13 +3,13 @@ framework module Liquid {
   export *
 
   module * { export * }
+
+  header "LiquidGraphicsAuthor-umbrella.h"
+  header "MTCNN.h"
+  header "Box.h"
+  header "Tools.h"
+  header "ExceptionHandler.h"
   
-  // Resolve references to LiquidGraphicsAuthor
-  module LiquidGraphicsAuthor [extern_c] {
-    umbrella header "LiquidGraphicsAuthor-umbrella.h"
-    export *
-    module * { export * }
-  }
 }
 
 module Liquid.Swift {
